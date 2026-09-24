@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Signal · English 8 · Inkwell</title>
+<meta name="description" content="The Signal — an interactive story course in English for grade 8 on the Inkwell platform.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/signal.css?v=1.1.1">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<div id="app"><div class="boot">Loading The Signal…</div></div>
+
+<!--
+  Порядок важливий:
+  config → course (карта курсу) → core → player → screens (бібліотеки екранів) → auth (вхід через Inkwell, запускає курс).
+  Уроки з lessons/ підвантажуються автоматично за списком у js/course.js.
+  Після оновлення файлів змініть ?v= тут і VERSION у js/config.js.
+-->
+<script src="js/config.js?v=1.1.1"></script>
+<script src="js/course.js?v=1.1.1"></script>
+<script src="js/core.js?v=1.1.1"></script>
+<script src="js/player.js?v=1.1.1"></script>
+<script src="js/screens/story.js?v=1.1.1"></script>
+<script src="js/auth.js?v=1.1.1"></script>
+</body>
+</html>
