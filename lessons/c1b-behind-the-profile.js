@@ -106,21 +106,24 @@ window.SIGNAL_LESSONS.c1b = {
         msgs:["Someone in this group isn't showing their real personality.", "Watch what they are doing today."]
       },
       items:[
-        { c:"leo", o:["He is usually confident and loud.", "He is usually shy and polite."], a:1,
+        { c:"leo", todayImg:"assets/characters/leo-today.webp", todayFace:{ x:48, y:36 },
+          o:["He is usually confident and loud.", "He is usually shy and polite."], a:1,
           why:"Remember Episode 1? Leo looks confident in his photos, but actually he's shy with new people — and very polite. He said “thank you” to the cook three times!",
           today:"Leo is usually calm and polite, but today he looks worried.",
           cap:"8:05 · outside the café",
           no:"That's what his profile says — but remember who wrote it? His sister, as a joke!",
           talk:["What is he usually like?", "What does he usually wear?", "Does he look different today?"],
           words:["shy", "polite"] },
-        { c:"dana", o:["She is usually careful and a bit impatient.", "She is usually lazy and relaxed."], a:0,
+        { c:"dana", todayImg:"assets/characters/dana-today.webp", todayFace:{ x:50, y:38 },
+          o:["She is usually careful and a bit impatient.", "She is usually lazy and relaxed."], a:0,
           why:"Dana has fourteen colour-coded notebooks and she's always ten minutes early — that's careful. And when lunch was five minutes late, she checked her watch twenty times!",
           today:"Dana usually plans everything, but today she looks confused.",
           cap:"8:07 · reception",
           no:"Lazy? Dana has fourteen notebooks and a plan for everything!",
           talk:["What is she usually like?", "What does she usually carry?", "Does she look different today?"],
           words:["careful", "impatient"] },
-        { c:"marko", o:["He is really lazy. He sleeps all day.", "He looks lazy, but actually he's careful."], a:1,
+        { c:"marko", todayImg:"assets/characters/marko-today.webp", todayFace:{ x:46, y:38 },
+          o:["He is really lazy. He sleeps all day.", "He looks lazy, but actually he's careful."], a:1,
           why:"Marko hates mornings, but he got up at half past six to fix the projector — and he was very careful with the cables.",
           today:"Marko usually looks sleepy in the morning, but today he looks wide awake. And he's holding his phone.",
           cap:"8:09 · main hall",
@@ -216,6 +219,7 @@ window.SIGNAL_LESSONS.c1b = {
       say:"Compare Leo's normal profile with Leo today. Tap the three most suspicious changes.",
       ua:"Порівняй звичайного Лео з Лео сьогодні. Натисни на три найпідозріліші зміни.",
       c:"leo",
+      todayImg:"assets/characters/leo-today.webp", todayFace:{ x:48, y:34 },
       normal:[
         { id:"clothes", t:"wears bright clothes", e:"🌈" },
         { id:"talk", t:"says hello to everyone", e:"👋" },
@@ -329,7 +333,7 @@ window.SIGNAL_LESSONS.c1b = {
     add(p, "stepPractice", { items:p.items, title:p.title, say:p.say, ua:p.ua }, p.items.map((it, i) => (i + 1) + " " + it.o[it.a]).join(" · "));
 
     const sp = st("spot");
-    add(sp, "spotDiff", { c:sp.c, normal:sp.normal, today:sp.today, build:sp.build, need:sp.need, say:sp.say, ua:sp.ua, when:"Day 2 · 8:20",
+    add(sp, "spotDiff", { c:sp.c, todayImg:sp.todayImg, todayFace:sp.todayFace, normal:sp.normal, today:sp.today, build:sp.build, need:sp.need, say:sp.say, ua:sp.ua, when:"Day 2 · 8:20",
       model:"Make the sentence: usually…, but today he is…",
       wrong:"Not quite. Something different from normal, happening now: <b>am / is / are + -ing</b>.",
       done:"Three clues in the case file. Leo is definitely acting strangely… but is he the one?" },
