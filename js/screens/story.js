@@ -27,13 +27,17 @@ const markCue = (text, cue) => { const s = esc(text), c = esc(cue); const k = s.
 const fmtSec = s => Math.floor(s / 60) + ":" + String(Math.round(s % 60)).padStart(2, "0");
 const he = (les, id) => (les.characters[id] && les.characters[id].pronoun) || { dana:"she", zoe:"she" }[id] || "he";
 
-function photo(c, today, cap, cls){
-  const f = c.face || { x:50, y:40 };
-  const img = today && c.todayImg
-    ? `<img src="${c.todayImg}" alt="${esc(c.name)} today" decoding="async">`
+/* photo(персонаж, сьогодні?, підпис, класи, { src, face })
+   src — окреме фото «сьогодні» з уроку; без нього те саме фото притемнюється (.dim) */
+function photo(c, today, cap, cls, o){
+  o = o || {};
+  const src = today ? o.src || c.todayImg : null;
+  const f = (src && o.face) || c.face || { x:50, y:40 };
+  const img = src
+    ? `<img src="${src}" alt="${esc(c.name)} today" decoding="async" style="object-position:${f.x}% ${f.y}%">`
     : c.img ? `<img src="${c.img}" alt="${esc(c.name + (today ? " today" : ""))}" decoding="async" style="object-position:${f.x}% ${f.y}%">`
     : avatar(c.look, { label:c.name, noProp:true });
-  return `<div class="ix-photo ${today && !c.todayImg ? "today" : ""} ${cls || ""}">${img}<span class="ix-stamp">${today ? "Today" : "Usually"}</span>${cap ? `<span class="ix-cap">${esc(cap)}</span>` : ""}</div>`;
+  return `<div class="ix-photo ${today ? "is-today" : ""} ${today && !src ? "dim" : ""} ${cls || ""}">${img}<span class="ix-stamp">${today ? "Today" : "Usually"}</span>${cap ? `<span class="ix-cap">${esc(cap)}</span>` : ""}</div>`;
 }
 function msg(les, m, o){
   o = o || {};
@@ -104,7 +108,7 @@ define("whichIsTrue", (el, scr, ctx) => {
     el.innerHTML = `${head(esc(d.title || "Is something different?"), d.say || "", d.ua || "", `Warm-up · ${esc(c.name)} · ${d.i + 1} of ${d.of}`)}
       <div class="ix-duo ${ok ? "" : "solo"}">
         <figure class="ix-fig">${photo(c, false)}<figcaption>${esc(c.name)}, ${c.age} · ${esc(c.from)}</figcaption></figure>
-        ${ok ? `<figure class="ix-fig ix-reveal">${photo(c, true, d.cap)}<figcaption>${esc(c.name)} this morning</figcaption></figure>` : ""}
+        ${ok ? `<figure class="ix-fig ix-reveal">${photo(c, true, d.cap, "", { src:d.todayImg, face:d.todayFace })}<figcaption>${esc(c.name)} this morning</figcaption></figure>` : ""}
       </div>
       <div class="card" style="margin-top:14px">
         <p class="q-big" style="margin:0">Which description matches ${esc(c.name)}?</p>
@@ -350,7 +354,7 @@ define("spotDiff", (el, scr, ctx) => {
           ${photo(c, false, null, "wide")}
           <ul>${d.normal.map(x => `<li class="ix-row static"><span aria-hidden="true">${x.e}</span>${esc(x.t)}</li>`).join("")}</ul></article>
         <article class="ix-profile is-today"><header><span class="ix-mini">${S.face(c, { zoom:1.9 })}</span><div><b>${esc(c.name)} today</b><small>${esc(d.when || "Today")}</small></div></header>
-          ${photo(c, true, null, "wide")}
+          ${photo(c, true, null, "wide", { src:d.todayImg, face:d.todayFace })}
           <ul>${d.today.map(x => { const cls = Q.built[x.id] ? "done" : Q.picked.includes(x.id) ? "sel" : ""; const dis = Q.built[x.id] || (!Q.picked.includes(x.id) && (done >= d.need || open)); return `<li><button class="ix-row ${cls}" type="button" data-t="${x.id}" ${dis ? "disabled" : ""} aria-pressed="${Q.picked.includes(x.id)}"><span aria-hidden="true">${Q.built[x.id] ? "✅" : x.e}</span>${esc(x.t)}</button></li>`; }).join("")}</ul></article>
       </div>
       ${b ? `<div class="card ix-build ix-reveal"><p class="muted" style="margin:0 0 6px;font-weight:700">${esc(d.model || "Make the sentence")}</p>
