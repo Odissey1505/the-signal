@@ -76,6 +76,9 @@ course.seasons.forEach(s => s.cycles.forEach(c => {
       else warn(`${id}: no photo (SVG portrait is used)`);
     });
     if (les.characters) ok("characters: " + Object.keys(les.characters).join(", "));
+    const refs = [...new Set((fs.readFileSync(path.join(root, l.file), "utf8").match(/assets\/[\w./-]+/g) || []))];
+    const missing = refs.filter(r => !exists(r));
+    missing.length ? err("files not found: " + missing.join(", ")) : (refs.length && ok(`${refs.length} asset file(s) found`));
     const words = (les.vocab || []).map(v => v.w);
     words.length ? ok(`${words.length} vocabulary items`) : (les.recall && les.recall.length ? ok(`no new words · recycles ${les.recall.length} words from earlier episodes`) : warn("no vocabulary"));
   });
