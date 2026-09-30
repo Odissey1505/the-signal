@@ -14,15 +14,21 @@ the-signal/
 │   ├── course.js               ← карта курсу: 5 сезонів, 20 серіалів, 60 епізодів
 │   ├── core.js                 ← ядро: прогрес, словник, головна, My words, Progress, Students
 │   ├── player.js               ← програвач епізодів: екрани, карта уроку, роутер
+│   ├── screens/
+│   │   ├── story.js            ← сюжетні екрани: груповий чат, голосове, дошка доказів… (епізоди B)
+│   │   └── review.js           ← екрани повторення й фінальних місій: чат «Next message», слова в пропуски, дошка доказів, breakout-таймер… (епізоди C)
 │   └── auth.js                 ← вхід через Inkwell (Supabase), запускає курс
 ├── lessons/
-│   └── c1a-first-impressions.js   ← зміст епізоду: персонажі, слова, етапи, аудіо, ключі
+│   ├── c1a-first-impressions.js   ← зміст епізоду: персонажі, слова, етапи, аудіо, ключі
+│   ├── c1b-behind-the-profile.js  ← Present Simple vs Continuous, розслідування
+│   └── c1c-behind-the-message.js  ← повторення циклу 1 + фінал історії
 ├── assets/
 │   ├── covers/                 ← обкладинки серіалів
 │   │   ├── c1-cover.webp       (16:9 — головна, екран завершення)
 │   │   └── c1-banner.webp      (≈3,2:1 — сторінка серіалу)
 │   └── characters/             ← фото персонажів
 │       ├── zoe.webp  leo.webp  dana.webp  marko.webp  nate.webp
+│       └── leo-today.webp  dana-today.webp  marko-today.webp
 ├── sql/
 │   └── signal_progress.sql     ← таблиця прогресу й правила доступу (виконати в Supabase)
 └── tools/
@@ -65,7 +71,9 @@ the-signal/
 
 Уроки підвантажуються автоматично за списком у `course.js`. Якщо файл уроку не знайдеться, курс усе одно відкриється, а епізод покажеться як «Soon».
 
-Якщо новому епізоду потрібні нові типи екранів (наприклад, граматичні вправи для епізоду B), їх додають у `js/player.js`: рендерер в об'єкт `X` і рядок у `screensOf()`.
+Якщо новому епізоду потрібні нові типи екранів, їх додають у бібліотеку в `js/screens/` через `SignalPlayer.define("тип", render, { label })`, а новий файл бібліотеки підключають в `index.html` після `js/player.js`. Урок перелічує свої екрани у функції `screens(add, st)`.
+
+Екрани з `js/screens/review.js` (епізоди C) ніколи не блокують кнопку Continue: кожне завдання можна пройти усно. Кнопки Check / Try again / Reset, UA й Example — усередині екрана.
 
 ## Картинки
 
