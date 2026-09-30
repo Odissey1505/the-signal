@@ -29,7 +29,7 @@ window.SIGNAL_COURSE = {
         lessons: [
           { id: "c1a", type: "A", title: "First impressions", tags: ["Vocabulary", "Listening"], content: true, file: "lessons/c1a-first-impressions.js" },
           { id: "c1b", type: "B", title: "Behind the Profile", tags: ["Grammar", "Reading", "Listening"], content: true, file: "lessons/c1b-behind-the-profile.js" },
-          { id: "c1c", type: "C", title: "The truth comes out", tags: ["Final Mission", "Listening"] }
+          { id: "c1c", type: "C", title: "Behind the Message", tags: ["Revision", "Reading", "Final Mission"], content: true, file: "lessons/c1c-behind-the-message.js" }
         ]
       },
       {
