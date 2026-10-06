@@ -34,12 +34,14 @@ window.SIGNAL_COURSE = {
       },
       {
         n: 2, title: "The Jacket Secret", emoji: "🧥", color: "#0E9F9A",
-        tagline: "A 30-year-old note in a pocket.",
+        tagline: "Choose a decade. Choose a sound. Create the look.",
         unit: "Unit 2 · In fashion", grammar: "Past simple",
-        blurb: "Dana finds her grandpa's old jacket. The note inside says: don't tell Olena.",
+        blurb: "Style & Music Day is on Friday. Marko has nothing to wear — and an old photo of his dad from 1998.",
+        image: "assets/covers/c2-cover.webp", imageAlt: "The Jacket Secret — Choose a decade. Choose a sound. Create the look. Outfits from the 1970s and 1990s, Marko and an old concert photo.",
+        banner: "assets/covers/c2-banner.webp", bannerAlt: "The Jacket Secret — Zoe, Leo, Dana, Nate, outfits from different decades, Marko and an old photo from 1998.",
         lessons: [
-          { id: "c2a", type: "A", title: "The attic box", tags: ["Vocabulary", "Reading"] },
-          { id: "c2b", type: "B", title: "Grandpa's story", tags: ["Grammar", "Listening"] },
+          { id: "c2a", type: "A", title: "What's Your Style?", tags: ["Vocabulary", "Reading"], content: true, file: "lessons/c2a-whats-your-style.js" },
+          { id: "c2b", type: "B", title: "Best night ever", tags: ["Grammar", "Listening"] },
           { id: "c2c", type: "C", title: "Swap shop challenge", tags: ["Final Mission", "Reading"] }
         ]
       },
