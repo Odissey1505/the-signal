@@ -8,8 +8,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235B4BFF'/%3E%3Ccircle cx='32' cy='32' r='7' fill='white'/%3E%3Cpath d='M18 18a20 20 0 0 0 0 28M46 18a20 20 0 0 1 0 28' stroke='white' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/signal.css?v=1.2.1">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/signal.css?v=1.3.0">
+<link rel="stylesheet" href="css/fashion.css?v=1.3.0">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -18,16 +19,18 @@
 
 <!--
   Порядок важливий:
-  config → course (карта курсу) → core → player → screens (бібліотеки екранів) → auth (вхід через Inkwell, запускає курс).
+  config → course (карта курсу) → core → player → art (малюнки одягу) → screens (бібліотеки екранів) → auth (вхід через Inkwell, запускає курс).
   Уроки з lessons/ підвантажуються автоматично за списком у js/course.js.
   Після оновлення файлів змініть ?v= тут і VERSION у js/config.js.
 -->
-<script src="js/config.js?v=1.2.1"></script>
-<script src="js/course.js?v=1.2.1"></script>
-<script src="js/core.js?v=1.2.1"></script>
-<script src="js/player.js?v=1.2.1"></script>
-<script src="js/screens/story.js?v=1.2.1"></script>
-<script src="js/screens/review.js?v=1.2.1"></script>
-<script src="js/auth.js?v=1.2.1"></script>
+<script src="js/config.js?v=1.3.0"></script>
+<script src="js/course.js?v=1.3.0"></script>
+<script src="js/core.js?v=1.3.0"></script>
+<script src="js/player.js?v=1.3.0"></script>
+<script src="js/art/wardrobe.js?v=1.3.0"></script>
+<script src="js/screens/story.js?v=1.3.0"></script>
+<script src="js/screens/review.js?v=1.3.0"></script>
+<script src="js/screens/fashion.js?v=1.3.0"></script>
+<script src="js/auth.js?v=1.3.0"></script>
 </body>
 </html>
