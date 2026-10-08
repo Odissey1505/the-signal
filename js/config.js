@@ -10,7 +10,7 @@ window.SIGNAL_CONFIG = {
   STUDENTS_TABLE: "signal_students",
   COURSE_ID: "the-signal-8",
   STORAGE_KEY: "signal8:progress:v2",
-  VERSION: "1.4.5"          // змініть після оновлення уроків, щоб браузери не брали старі файли з кешу
+  VERSION: "1.4.6"          // змініть після оновлення уроків, щоб браузери не брали старі файли з кешу
 };
 
 /* Уроки реєструються тут, коли підвантажуються файли з lessons/ */
