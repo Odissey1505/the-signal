@@ -8,6 +8,7 @@
    Персонажі беруться з c1a (див. requires).
    Екрани — з js/screens/fashion.js, малюнки одягу — js/art/wardrobe.js.
    Порядок екранів — у функції screens() в кінці файлу.
+   Розминка (stage "warm") використовує готові фото з папки assets/c2a/ (warm-1 … warm-4).
    Реалістичні картинки можна додати пізніше: поля img у stage "opening"
    (обкладинка) і stage "ending" (photo.img — старе фото 1998 року).
    ============================================================ */
@@ -151,14 +152,14 @@ window.SIGNAL_LESSONS.c2a = {
       say:"Look at the four outfits. Answer the questions one by one.",
       ua:"Подивись на чотири образи. Відповідай на питання по одному.",
       gallery:[
-        { id:"1", label:"Shirt and tie", look:LOOK.w1 },
-        { id:"2", label:"Hoodie and joggers", look:LOOK.w2 },
-        { id:"3", label:"Denim and a cap", look:LOOK.w3 },
-        { id:"4", label:"Neon and flares", look:LOOK.w4 }
+        { id:"1", label:"Suit and tie", look:LOOK.w1, img:"assets/c2a/warm-1.webp", alt:"Outfit 1: a dark blue suit, a white shirt, a red tie and brown leather shoes" },
+        { id:"2", label:"Hoodie and joggers", look:LOOK.w2, img:"assets/c2a/warm-2.webp", alt:"Outfit 2: a grey hoodie, dark blue joggers and white trainers" },
+        { id:"3", label:"Jacket and a cap", look:LOOK.w3, img:"assets/c2a/warm-3.webp", alt:"Outfit 3: a light blue jacket, beige trousers, white trainers, a small bag and a cap" },
+        { id:"4", label:"Neon and flares", look:LOOK.w4, img:"assets/c2a/warm-4.webp", alt:"Outfit 4: a bright pink and blue jacket, a smiley T-shirt, purple flared trousers, pink sunglasses and green high-tops" }
       ],
       qs:[
         { q:"Which outfit do you like most? Why?", ua:"Який образ тобі подобається найбільше? Чому?", pick:true, fu:["What colour do you like most?", "Would you change anything?"],
-          idea:"I like outfit 3 most because the jacket looks cool and the trousers look easy to wear." },
+          idea:"I like outfit 3 most because the blue jacket looks cool and the trousers look easy to wear." },
         { q:"Which one would you wear to school?", ua:"Який із них ти вдягнув би / вдягнула б до школи?", pick:true, fu:["Do you have a school uniform?"],
           idea:"I'd wear outfit 2 to school. A hoodie is warm, and I can sit in it all day." },
         { q:"Which one would you wear to a party?", ua:"Який — на вечірку?", pick:true,

@@ -91,6 +91,7 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .ss-look .ss-num{position:absolute;left:8px;top:8px;z-index:1}
 .ss-look .ss-cap{display:block;font-weight:700;font-size:.86rem;margin-top:6px;color:var(--ink-2)}
 .ss-look.on .ss-art{box-shadow:0 0 0 4px var(--st-coral),var(--shadow-lg)}
+.ss-look .ss-img{aspect-ratio:1/1;object-fit:cover;background:#F3EEE4}
 .ss-yours{position:absolute;right:8px;top:8px;border-radius:999px;background:var(--st-coral);color:#fff;font-weight:800;font-size:.75rem;padding:.2em .6em}
 .ss-qcard{border-top:6px solid var(--st-coral)}
 .ss-qtop{display:flex;align-items:center;gap:12px;margin-bottom:10px}

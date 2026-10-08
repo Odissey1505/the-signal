@@ -94,7 +94,8 @@ define("styleCover", (el, scr, ctx) => {
 /* ============================================================
    questionDeck — питання по одному: 🔊, переклад, «Need an idea?»,
    follow-up, реакції вчителя; за потреби — вибір образу з галереї
-   data: { title, say, ua, kicker, gallery:[{id,label,look}], qs:[{q,ua,pick,fu:[..],idea}],
+   data: { title, say, ua, kicker, gallery:[{id,label,look,img,alt}], qs:[{q,ua,pick,fu:[..],idea}],
+           (img — готова картинка з номером; без неї образ малюється кодом з look)
            phrases:[..], words (лічильник цільових слів у полі відповіді), note }
    ============================================================ */
 define("questionDeck", (el, scr, ctx) => {
@@ -106,7 +107,7 @@ define("questionDeck", (el, scr, ctx) => {
     const gal = d.gallery ? `<div class="ss-gallery ${q.pick ? "picking" : ""}">${d.gallery.map((g, k) => {
         const on = A.pick[i] === g.id;
         return `<button class="ss-look ${on ? "on" : ""}" type="button" data-look="${g.id}" ${q.pick ? "" : "tabindex=\"-1\""} aria-pressed="${on}" aria-label="Outfit ${k + 1}: ${esc(g.label)}">
-          <span class="ss-num">${k + 1}</span>${look(g.look, g.label)}<span class="ss-cap">${esc(g.label)}</span>${on ? `<span class="ss-yours">Your choice</span>` : ""}</button>`; }).join("")}</div>` : "";
+          ${g.img ? `<img class="ss-art ss-img" src="${g.img}" alt="${esc(g.alt || g.label)}" decoding="async">` : `<span class="ss-num">${k + 1}</span>${look(g.look, g.label)}`}<span class="ss-cap">${esc(g.label)}</span>${on ? `<span class="ss-yours">Your choice</span>` : ""}</button>`; }).join("")}</div>` : "";
     el.innerHTML = `${head(esc(d.title), d.say || "", d.ua || "", esc(d.kicker || "Speaking"))}
       ${gal}
       <div class="card ss-qcard">
