@@ -9,9 +9,11 @@
    Екрани — з js/screens/fashion.js, малюнки одягу — js/art/wardrobe.js.
    Порядок екранів — у функції screens() в кінці файлу.
    Розминка (stage "warm") і чат Марка (stage "story") використовують готові фото
-   з папки assets/c2a/ (warm-1 … warm-4, marko-1 … marko-3); у парі skinny ↔ loose-fitting
+   з папки assets/c2a/ (warm-1 … warm-4, marko-1 … marko-3); у парі uncomfortable ↔ comfortable —
+   rack-uncomf і rack-comf (ті самі фото, що warm-1 і warm-2, але з літерами A/B);
+   Outfit Detective і «Who is probably…?» (stage "detective") — det-alex, det-kai, det-sofia, det-mia; у парі skinny ↔ loose-fitting
    образи A і B — фото rack-skinny і rack-loose; у парі brand new ↔ second-hand — rack-new і rack-second;
-   у парі casual ↔ smart образ B — rack-smart; у парі trendy ↔ unfashionable — rack-trendy і rack-unfash;
+   у парі casual ↔ smart — rack-casual і rack-smart; у парі trendy ↔ unfashionable — rack-trendy і rack-unfash;
    у парі badly-dressed ↔ well-dressed — rack-badly і rack-well; опитування Марка (stage "checkpoint") — poll-a і poll-b;
    «Guess the decade» (stage "preread") — era-90s … era-50s, порядок A–E фіксований;
    старе фото 1998 (stage "ending") — dad-1998. Поле img є в gallery, att.looks і left/right карток rack.
@@ -213,8 +215,8 @@ window.SIGNAL_LESSONS.c2a = {
       title:"The outfit rack 👕",
       cards:[
         { title:"Comfortable or not?", q:"Which outfit looks easier to wear for five hours?", ua:"Який образ легше носити п'ять годин?",
-          left:{ w:"uncomfortable", look:LOOK.uncomf, cap:"A stiff collar, very tight jeans and hard new shoes" },
-          right:{ w:"comfortable", look:LOOK.comf, cap:"A soft hoodie, joggers and trainers" }, a:"B",
+          left:{ w:"uncomfortable", look:LOOK.uncomf, cap:"A stiff suit, a tight collar and a tie, hard leather shoes", img:"assets/c2a/rack-uncomf.webp", alt:"Outfit A: a dark blue suit, a white shirt, a red tie, a belt and brown leather shoes" },
+          right:{ w:"comfortable", look:LOOK.comf, cap:"A soft hoodie, joggers and trainers", img:"assets/c2a/rack-comf.webp", alt:"Outfit B: a soft grey hoodie, dark blue joggers and white trainers" }, a:"B",
           hint:"Which clothes are soft and easy to move in?", why:"Soft, loose clothes feel nice for many hours." },
         { title:"Tight or loose?", q:"Which clothes stay very close to the body?", ua:"Який одяг щільно прилягає до тіла?",
           left:{ w:"skinny", look:LOOK.skinny, cap:"Jeans that are tight around the legs", img:"assets/c2a/rack-skinny.webp", alt:"Outfit A: a white T-shirt, tight black jeans and black boots" },
@@ -225,7 +227,7 @@ window.SIGNAL_LESSONS.c2a = {
           right:{ w:"second-hand", look:LOOK.second, cap:"A jacket and old boots from a charity shop — £4", img:"assets/c2a/rack-second.webp", alt:"Outfit B: an old brown leather jacket on a hanger with a £4 price tag, a T-shirt and worn brown boots" }, a:"B",
           hint:"Look at the labels and the hanger.", why:"Second-hand clothes come from another person. They aren't new, but they can still look great!" },
         { title:"Formal or relaxed?", q:"Which outfit would you choose for a formal event?", ua:"Який образ ти обереш для офіційної події?",
-          left:{ w:"casual", look:LOOK.casual, cap:"Jeans, a hoodie and a cap" },
+          left:{ w:"casual", look:LOOK.casual, cap:"Jeans, a hoodie and a cap", img:"assets/c2a/rack-casual.webp", alt:"Outfit A: an orange hoodie, blue jeans, white trainers and a dark blue cap" },
           right:{ w:"smart", look:LOOK.smart, cap:"A suit, a shirt and a tie", img:"assets/c2a/rack-smart.webp", alt:"Outfit B: a dark blue suit, a white shirt, a dark blue tie, a belt and brown leather shoes" }, a:"B",
           hint:"Think about a wedding or a school ceremony.", why:"Smart clothes are for special, formal events. Casual clothes are for every day." },
         { title:"In or out?", q:"Which outfit looks popular right now?", ua:"Який образ виглядає популярним саме зараз?",
@@ -266,16 +268,16 @@ window.SIGNAL_LESSONS.c2a = {
       say:"Read the clues. Choose 2–3 adjectives for each person. Then say a sentence.",
       ua:"Прочитай підказки. Обери 2–3 прикметники для кожної людини. Потім скажи речення.",
       people:[
-        { id:"alex", name:"Alex", he:"he", look:LOOK.alex,
+        { id:"alex", name:"Alex", he:"he", look:LOOK.alex, img:"assets/c2a/det-alex.webp", alt:"Alex's outfit: a dark blue suit, a white shirt, a blue tie, a belt and shiny black shoes",
           clues:[{ e:"🤵", t:"a dark suit and a tie" }, { e:"✨", t:"clean, shiny new shoes" }, { e:"💍", t:"going to a formal event" }],
           accept:["smart", "well-dressed", "brand new"], sample:"Alex looks smart and well-dressed. His shoes look brand new." },
-        { id:"kai", name:"Kai", he:"he", look:LOOK.kai,
+        { id:"kai", name:"Kai", he:"he", look:LOOK.kai, img:"assets/c2a/det-kai.webp", alt:"Kai's outfit: a soft green hoodie, dark green joggers, headphones and old white trainers",
           clues:[{ e:"🧸", t:"a big, soft hoodie" }, { e:"👖", t:"loose joggers and old trainers" }, { e:"🚌", t:"a ten-hour bus trip today" }],
           accept:["comfortable", "casual", "loose-fitting"], sample:"Kai looks casual and comfortable. His joggers are loose-fitting." },
-        { id:"sofia", name:"Sofia", he:"she", look:LOOK.sofia,
+        { id:"sofia", name:"Sofia", he:"she", look:LOOK.sofia, img:"assets/c2a/det-sofia.webp", alt:"Sofia's outfit: a short light blue jacket, a white T-shirt, wide beige trousers, black sunglasses, a pink bag and new white trainers",
           clues:[{ e:"📱", t:"her outfit photos get 5,000 likes" }, { e:"👟", t:"the newest chunky trainers" }, { e:"🧥", t:"the same jacket as a famous singer" }],
           accept:["trendy", "brand new", "well-dressed", "loose-fitting"], sample:"Sofia looks trendy. Her trainers are brand new, and her trousers are loose-fitting." },
-        { id:"mia", name:"Mia", he:"she", look:LOOK.mia,
+        { id:"mia", name:"Mia", he:"she", look:LOOK.mia, img:"assets/c2a/det-mia.webp", alt:"Mia's outfit: an old brown leather jacket with badges and an £8 price tag, a black band T-shirt, tight black jeans and black boots",
           clues:[{ e:"🏷️", t:"a jacket from a charity shop for £8" }, { e:"🎸", t:"an old band T-shirt" }, { e:"🖤", t:"very tight black jeans" }],
           accept:["second-hand", "skinny", "casual"], sample:"Mia's jacket is second-hand, and her jeans are skinny. She looks casual and cool." }
       ],

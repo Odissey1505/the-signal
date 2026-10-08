@@ -247,6 +247,7 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .ss-mini-people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
 .ss-mini-people figure{margin:0;text-align:center;font-weight:800}
 .ss-mini-people .ss-art{border-radius:14px;box-shadow:var(--shadow)}
+.ss-pthumb .ss-img,.ss-detfig .ss-img,.ss-mini-people .ss-img{aspect-ratio:1/1;object-fit:cover;background:#F3EEE4}
 .ss-predq .chips{margin-left:38px}
 .ss-predq .note,.ss-predq .row,.ss-predq .help{margin-left:38px}
 

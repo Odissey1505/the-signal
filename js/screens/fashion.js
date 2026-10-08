@@ -26,6 +26,8 @@ const say = (t, l) => sayBtn(String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const order = (Q, key, ids) => { if (!Array.isArray(Q[key]) || Q[key].length !== ids.length || ids.some(x => !Q[key].includes(x))){ Q[key] = shuffle(ids); save(); } return Q[key]; };
 const LETTER = i => String.fromCharCode(65 + i);
+/* фото (img) або намальований образ (look) */
+const pic = (o, label, cls) => o.img ? `<img class="ss-art ss-img ${cls || ""}" src="${o.img}" alt="${esc(o.alt || label)}" decoding="async">` : look(o.look, label);
 const face = (les, id, z) => les.characters && les.characters[id] ? S.face(les.characters[id], { zoom: z || 1.9 }) : "";
 
 /* цільові слова уроку: пошук у тексті й підсвічування */
@@ -342,7 +344,7 @@ define("oppositesGame", (el, scr, ctx) => {
 
 /* ============================================================
    outfitDetective — 4 підлітки, підказки; обери 2–3 прикметники
-   data: { people:[{id,name,look,clues:[{e,t}],accept:[..],sample}], bank:[..], title, say, ua }
+   data: { people:[{id,name,look,img,alt,clues:[{e,t}],accept:[..],sample}], bank:[..], title, say, ua }
    ============================================================ */
 define("outfitDetective", (el, scr, ctx) => {
   const d = scr.data, les = ctx.les; const D = store(ctx, scr, "det"); D.sel = D.sel || {}; D.chk = D.chk || {};
@@ -352,9 +354,9 @@ define("outfitDetective", (el, scr, ctx) => {
     const p = d.people.find(x => x.id === D.cur); const sel = D.sel[p.id] || []; const chk = D.chk[p.id];
     const good = sel.filter(w => p.accept.includes(w)).length;
     el.innerHTML = `${head(esc(d.title || "Outfit Detective 🔎"), d.say || "", d.ua || "", `Practice · ${Object.keys(D.chk).length} of ${d.people.length} described`)}
-      <div class="ss-tabs" role="tablist">${d.people.map(x => `<button class="ss-ptab ${x.id === D.cur ? "on" : ""} ${D.chk[x.id] ? "done" : ""}" type="button" role="tab" aria-selected="${x.id === D.cur}" data-p="${x.id}"><span class="ss-pthumb">${look(x.look, x.name)}</span>${D.chk[x.id] ? "✓ " : ""}${esc(x.name)}</button>`).join("")}</div>
+      <div class="ss-tabs" role="tablist">${d.people.map(x => `<button class="ss-ptab ${x.id === D.cur ? "on" : ""} ${D.chk[x.id] ? "done" : ""}" type="button" role="tab" aria-selected="${x.id === D.cur}" data-p="${x.id}"><span class="ss-pthumb">${pic(x, x.name)}</span>${D.chk[x.id] ? "✓ " : ""}${esc(x.name)}</button>`).join("")}</div>
       <div class="ss-det">
-        <figure class="ss-detfig">${look(p.look, p.name + "'s outfit")}<figcaption>${esc(p.name)}</figcaption></figure>
+        <figure class="ss-detfig">${pic(p, p.name + "'s outfit")}<figcaption>${esc(p.name)}</figcaption></figure>
         <div class="card ss-detcard">
           <h3 class="ss-h">🔎 Clues</h3>
           <ul class="ss-clues">${p.clues.map(c => `<li><span aria-hidden="true">${c.e}</span>${esc(c.t)}</li>`).join("")}</ul>
@@ -388,7 +390,7 @@ define("outfitPredict", (el, scr, ctx) => {
   const T = Toggles();
   const draw = () => {
     el.innerHTML = `${head(esc(d.title || "Who is probably…?"), d.say || "", d.ua || "", "Practice · predict and explain")}
-      <div class="ss-mini-people">${d.people.map(p => `<figure>${look(p.look, p.name)}<figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>
+      <div class="ss-mini-people">${d.people.map(p => `<figure>${pic(p, p.name)}<figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>
       ${d.qs.map((q, i) => { const pk = A.pick[i]; const best = pk && q.best.includes(pk);
         return `<div class="card ss-predq"><div class="ss-qrow"><p class="ss-q2"><span class="ss-num">${i + 1}</span>${esc(q.q)}</p>${say(q.q)}</div>
           <div class="chips">${d.people.map(p => `<button class="chip ${pk === p.id ? (best ? "good" : "on") : ""}" type="button" data-q="${i}" data-pp="${p.id}" aria-pressed="${pk === p.id}">${esc(p.name)}</button>`).join("")}</div>
