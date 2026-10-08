@@ -147,6 +147,7 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .ss-attlooks.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ss-attlooks figure{margin:0;position:relative}
 .ss-attlooks .ss-art{border-radius:12px}
+.ss-attlooks .ss-attimg{aspect-ratio:440/690;object-fit:cover;background:#F3EEE4}
 .ss-attlooks .ss-num{position:absolute;left:5px;top:5px;min-width:22px;height:22px;font-size:.75rem;border-radius:7px}
 .ss-attlooks figcaption{font-size:.72rem;font-weight:700;color:#6E6888;margin-top:3px;line-height:1.25}
 /* опитування */
@@ -159,8 +160,9 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .ss-popt[disabled]{cursor:default}
 .ss-popt .ss-num{position:absolute;left:12px;top:12px;z-index:1}
 .ss-popt .ss-art{border-radius:10px}
+.ss-popt .ss-img{aspect-ratio:480/587;object-fit:cover;background:#F3EEE4}
 .ss-popt b{display:block;font-size:.92rem;margin-top:6px}
-.ss-popt small{display:block;font-size:.78rem;color:#6E6888;font-weight:600;line-height:1.3}
+.ss-popt small{display:block;font-size:.78rem;color:#6E6888;font-weight:600;line-height:1.3;text-align:left;margin-top:0}
 .ss-pdone{margin:.6em 0 0;font-size:.92rem}
 .ss-unlock{display:flex;gap:16px;align-items:center;margin-top:16px;border-radius:24px;padding:18px 20px;background:var(--st-ink);color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
 .ss-unlock::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(184,242,58,.25) 50%,transparent 70%);transform:translateX(-100%);animation:ssShine 1.6s .3s ease-out forwards}
@@ -183,6 +185,7 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .ss-pair{scroll-margin-top:120px}
 .ss-disc + div .note{margin-top:12px}
 .ss-side[disabled]{cursor:default}
+.ss-side .ss-img{aspect-ratio:320/340;object-fit:contain;background:#F1ECE3}
 .ss-vs{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--st-ink);color:var(--st-lime);font-weight:800;font-size:1.2rem}
 .ss-pair{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch;margin-top:14px}
 .ss-pair > div{display:flex}
@@ -272,6 +275,7 @@ mark.ss-w{background:color-mix(in srgb,var(--pc,var(--st-coral)) 16%,transparent
 .card.ss-mlook + .card.ss-mlook{margin-top:0}
 .ss-mlook .ss-num{position:absolute;left:16px;top:16px;z-index:1}
 .ss-mlook .ss-art{border-radius:14px}
+.ss-mlook .ss-img{aspect-ratio:1/1;object-fit:cover;background:#F3EEE4}
 .ss-decs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
 .ss-dec{border:0;border-radius:10px;background:var(--surface-2);font-weight:800;padding:.35em .4em;cursor:pointer;color:var(--ink);font-size:.9rem}
 .ss-dec:hover{background:var(--surface-3)}

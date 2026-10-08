@@ -140,9 +140,9 @@ define("questionDeck", (el, scr, ctx) => {
 /* ============================================================
    styleChat — чат команди; вкладення: афіша, образи, опитування
    data: { title, say, ua, kicker, chat, sub, me, msgs:[{who,t,time,att}|{sys}],
-           choice:{q,ua,opts:[{id,label,sub,look}],replies:{id:[msgs]}}, after:[msgs],
+           choice:{q,ua,opts:[{id,label,sub,look,img,alt}],replies:{id:[msgs]}}, after:[msgs],
            unlock:{title,text}, cta }
-   att: { poster:{title,when,lines:[..]} } | { looks:[{label,look}] }
+   att: { poster:{title,when,lines:[..]} } | { looks:[{label,look,img,alt}] }  (img — готова картинка з номером)
    ============================================================ */
 function poster(p){
   return `<div class="ss-poster"><span class="ss-poster-k">${esc(p.kicker || "School event")}</span><b>${esc(p.title)}</b><small>${esc(p.when)}</small>${p.lines.map(l => `<p>${esc(l)}</p>`).join("")}<div class="ss-eq" aria-hidden="true">${Array.from({ length: 14 }, (_, k) => `<i style="--h:${20 + (k * 37 % 70)}%;--d:${(k % 5) * .12}s"></i>`).join("")}</div></div>`;
@@ -150,7 +150,7 @@ function poster(p){
 function attHTML(a){
   if (!a) return "";
   if (a.poster) return poster(a.poster);
-  if (a.looks) return `<div class="ss-attlooks n${a.looks.length}">${a.looks.map((l, k) => `<figure><span class="ss-num">${l.tag || k + 1}</span>${look(l.look, l.label)}<figcaption>${esc(l.label)}</figcaption></figure>`).join("")}</div>`;
+  if (a.looks) return `<div class="ss-attlooks n${a.looks.length}">${a.looks.map((l, k) => `<figure>${l.img ? `<img class="ss-art ss-attimg" src="${l.img}" alt="${esc(l.alt || l.label)}" decoding="async">` : `<span class="ss-num">${l.tag || k + 1}</span>${look(l.look, l.label)}`}<figcaption>${esc(l.label)}</figcaption></figure>`).join("")}</div>`;
   return "";
 }
 function chatMsg(les, m, me){
@@ -187,7 +187,7 @@ define("styleChat", (el, scr, ctx) => {
   let gen = 0;
   const stop = () => { gen++; };
   const pollHTML = () => `<div class="ss-msg"><span class="ss-ava">${face(les, choice.from || "marko")}</span><div class="ss-bub ss-poll"><b class="ss-name name-${choice.from || "marko"}">📊 Poll</b><span class="ss-pq">${esc(choice.q)}</span>
-      <div class="ss-popts">${choice.opts.map(o => `<button class="ss-popt ${A.pick === o.id ? "on" : ""}" type="button" data-pick="${o.id}" aria-pressed="${A.pick === o.id}" ${A.pick ? "disabled" : ""}><span class="ss-num">${esc(o.id)}</span>${look(o.look, o.label)}<b>${esc(o.label)}</b><small>${esc(o.sub || "")}</small></button>`).join("")}</div>
+      <div class="ss-popts">${choice.opts.map(o => `<button class="ss-popt ${A.pick === o.id ? "on" : ""}" type="button" data-pick="${o.id}" aria-pressed="${A.pick === o.id}" ${A.pick ? "disabled" : ""}>${o.img ? `<img class="ss-art ss-img" src="${o.img}" alt="${esc(o.alt || o.label)}" decoding="async">` : `<span class="ss-num">${esc(o.id)}</span>${look(o.look, o.label)}`}<b>${esc(o.label)}</b><small>${esc(o.sub || "")}</small></button>`).join("")}</div>
       ${A.pick ? `<p class="ss-pdone">✓ You voted ${esc(A.pick)}. Nice! Tell your teacher <b>why</b> — use two words from today.</p>` : `<p class="ss-pdone muted">Tap A or B to vote.</p>`}</div></div>`;
   const finish = () => {
     A.seen = true; save();
@@ -226,7 +226,8 @@ define("styleChat", (el, scr, ctx) => {
 
 /* ============================================================
    pairCard — пара протилежностей: два образи → питання-відкриття → слова
-   data: { i, of, title, q, ua, a:"A"|"B", left:{w,look,cap}, right:{w,look,cap}, note, hint }
+   data: { i, of, title, q, ua, a:"A"|"B", left:{w,look,cap,img,alt}, right:{w,look,cap,img,alt}, note, hint }
+   (img — готова картинка з літерою A/B; без неї образ малюється кодом з look)
    ============================================================ */
 function wordCard(les, w, side){
   const v = (les.vocab || []).find(x => x.w === w) || { w };
@@ -245,7 +246,7 @@ define("pairCard", (el, scr, ctx) => {
   const draw = () => {
     const ok = R.pick === d.a; const open = ok || R.show;
     const side = (k, s) => { let cls = ""; if (R.pick === k) cls = ok ? "good" : "bad"; else if (open && k === d.a) cls = "good";
-      return `<button class="ss-side ${cls}" type="button" data-side="${k}" ${open ? "disabled" : ""} aria-label="Outfit ${k}: ${esc(s.cap)}"><span class="ss-num">${k}</span>${look(s.look, s.cap)}<span class="ss-cap">${esc(s.cap)}</span></button>`; };
+      return `<button class="ss-side ${cls}" type="button" data-side="${k}" ${open ? "disabled" : ""} aria-label="Outfit ${k}: ${esc(s.cap)}">${s.img ? `<img class="ss-art ss-img" src="${s.img}" alt="${esc(s.alt || s.cap)}" decoding="async">` : `<span class="ss-num">${k}</span>${look(s.look, s.cap)}`}<span class="ss-cap">${esc(s.cap)}</span></button>`; };
     el.innerHTML = `${head(esc(d.title), "", "", `The outfit rack · pair ${d.i + 1} of ${d.of}`)}
       <div class="ss-steps" aria-hidden="true">${Array.from({ length: d.of }, (_, k) => `<i class="${k < d.i ? "past" : k === d.i ? "on" : ""}"></i>`).join("")}</div>
       <div class="card ss-disc"><div class="ss-qrow"><p class="q-big ss-q">${esc(d.q)}</p>${say(d.q)}</div>${d.ua ? `<p class="ss-qua">🇺🇦 ${esc(d.ua)}</p>` : ""}</div>
@@ -420,22 +421,33 @@ define("eraCards", (el, scr, ctx) => {
 
 /* ============================================================
    eraMatch — прогноз: який образ з якого десятиліття (без перевірки)
-   data: { decades:[{id,decade,e}], looks:[{id,era,look,label}], title, say, ua, note }
+   data: { decades:[{id,decade,e}], looks:[{id,era,look,label,img,alt}], fixed, title, say, ua, note }
+   (img — готова картинка з літерою; тоді ставте fixed:true, щоб літери збігалися з порядком)
    ============================================================ */
 define("eraMatch", (el, scr, ctx) => {
   const d = scr.data; const M = store(ctx, scr, "match"); M.pick = M.pick || {};
-  const ord = order(M, "order", d.looks.map(l => l.id));
+  /* fixed:true — порядок як у data.looks (літери A–E вже намальовані на картинках), інакше — перемішати */
+  if (d.fixed) M.order = d.looks.map(l => l.id);
+  const ord = d.fixed ? M.order : order(M, "order", d.looks.map(l => l.id));
   const draw = () => {
     const n = Object.keys(M.pick).length;
     el.innerHTML = `${head(esc(d.title || "Guess the decade"), d.say || "", d.ua || "", "Pre-reading · prediction")}
       <div class="note info" style="margin-top:0">🤔 ${esc(d.note || "Don't worry if you're not sure. You'll check your ideas while reading.")}</div>
       <div class="ss-match">${ord.map((id, i) => { const l = d.looks.find(x => x.id === id); return `<div class="card ss-mlook">
-        <span class="ss-num">${LETTER(i)}</span>${look(l.look, "Look " + LETTER(i))}
+        ${l.img ? `<img class="ss-art ss-img" src="${l.img}" alt="${esc(l.alt || "Look " + LETTER(i))}" decoding="async">` : `<span class="ss-num">${LETTER(i)}</span>${look(l.look, "Look " + LETTER(i))}`}
         <div class="ss-decs" role="group" aria-label="Look ${LETTER(i)}: choose a decade">${d.decades.map(x => `<button class="ss-dec ${M.pick[id] === x.id ? "on" : ""}" type="button" data-l="${id}" data-dec="${x.id}" aria-pressed="${M.pick[id] === x.id}">${esc(x.decade)}</button>`).join("")}</div>
       </div>`; }).join("")}</div>
-      <p class="muted" style="text-align:center;margin-top:12px">${n} / ${d.looks.length} guesses saved — you'll see them in the timeline.</p>`;
+      <p class="muted" style="text-align:center;margin-top:12px"><span id="mn">${n}</span> / ${d.looks.length} guesses saved — you'll see them in the timeline.</p>`;
   };
-  el.onclick = e => { const b = e.target.closest("[data-dec]"); if (b){ M.pick[b.dataset.l] = M.pick[b.dataset.l] === b.dataset.dec ? undefined : b.dataset.dec; if (!M.pick[b.dataset.l]) delete M.pick[b.dataset.l]; save(); draw(); } };
+  /* клік оновлює лише кнопки — картинки не перемальовуються й не блимають */
+  el.onclick = e => {
+    const b = e.target.closest("[data-dec]"); if (!b) return;
+    const l = b.dataset.l;
+    if (M.pick[l] === b.dataset.dec) delete M.pick[l]; else M.pick[l] = b.dataset.dec;
+    save();
+    $$(`[data-l="${l}"]`, el).forEach(x => { const on = M.pick[l] === x.dataset.dec; x.classList.toggle("on", on); x.setAttribute("aria-pressed", String(on)); });
+    const mn = $("#mn", el); if (mn) mn.textContent = Object.keys(M.pick).length;
+  };
   draw();
   ctx.setCTA({ label:"Continue" });
 }, { label: () => "Guess" });

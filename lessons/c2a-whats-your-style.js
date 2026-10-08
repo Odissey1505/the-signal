@@ -8,7 +8,13 @@
    Персонажі беруться з c1a (див. requires).
    Екрани — з js/screens/fashion.js, малюнки одягу — js/art/wardrobe.js.
    Порядок екранів — у функції screens() в кінці файлу.
-   Розминка (stage "warm") використовує готові фото з папки assets/c2a/ (warm-1 … warm-4).
+   Розминка (stage "warm") і чат Марка (stage "story") використовують готові фото
+   з папки assets/c2a/ (warm-1 … warm-4, marko-1 … marko-3); у парі skinny ↔ loose-fitting
+   образи A і B — фото rack-skinny і rack-loose; у парі brand new ↔ second-hand — rack-new і rack-second;
+   у парі casual ↔ smart образ B — rack-smart; у парі trendy ↔ unfashionable — rack-trendy і rack-unfash;
+   у парі badly-dressed ↔ well-dressed — rack-badly і rack-well; опитування Марка (stage "checkpoint") — poll-a і poll-b;
+   «Guess the decade» (stage "preread") — era-90s … era-50s, порядок A–E фіксований;
+   старе фото 1998 (stage "ending") — dad-1998. Поле img є в gallery, att.looks і left/right карток rack.
    Реалістичні картинки можна додати пізніше: поля img у stage "opening"
    (обкладинка) і stage "ending" (photo.img — старе фото 1998 року).
    ============================================================ */
@@ -190,7 +196,10 @@ window.SIGNAL_LESSONS.c2a = {
         { who:"marko", t:"Guys… I have a problem. 😭" },
         { who:"marko", t:"I have absolutely no idea what to wear." },
         { who:"dana", t:"You have three days. Just choose something!" },
-        { who:"marko", t:"That's the problem. EVERYTHING looks wrong. 😂", att:{ looks:[{ label:"My usual hoodie", look:LOOK.m1 }, { label:"Dad's old suit 😬", look:LOOK.m2 }, { label:"…this?", look:LOOK.m3 }] } },
+        { who:"marko", t:"That's the problem. EVERYTHING looks wrong. 😂", att:{ looks:[
+          { label:"My usual hoodie", look:LOOK.m1, img:"assets/c2a/marko-1.webp", alt:"Outfit 1: a green hoodie, dark blue joggers and white trainers" },
+          { label:"Dad's old suit 😬", look:LOOK.m2, img:"assets/c2a/marko-2.webp", alt:"Outfit 2: a brown jacket, a white shirt, a brown tie, brown trousers and leather shoes" },
+          { label:"…this?", look:LOOK.m3, img:"assets/c2a/marko-3.webp", alt:"Outfit 3: a pink PIZZA T-shirt, blue checked pyjama trousers, yellow glasses and sandals" }] } },
         { who:"nate", t:"Bro. Number 3. 😂😂" },
         { who:"leo", t:"Don't panic. We can help you!" }
       ],
@@ -208,24 +217,24 @@ window.SIGNAL_LESSONS.c2a = {
           right:{ w:"comfortable", look:LOOK.comf, cap:"A soft hoodie, joggers and trainers" }, a:"B",
           hint:"Which clothes are soft and easy to move in?", why:"Soft, loose clothes feel nice for many hours." },
         { title:"Tight or loose?", q:"Which clothes stay very close to the body?", ua:"Який одяг щільно прилягає до тіла?",
-          left:{ w:"skinny", look:LOOK.skinny, cap:"Jeans that are tight around the legs" },
-          right:{ w:"loose-fitting", look:LOOK.loose, cap:"Wide trousers with lots of space" }, a:"A",
+          left:{ w:"skinny", look:LOOK.skinny, cap:"Jeans that are tight around the legs", img:"assets/c2a/rack-skinny.webp", alt:"Outfit A: a white T-shirt, tight black jeans and black boots" },
+          right:{ w:"loose-fitting", look:LOOK.loose, cap:"Wide trousers with lots of space", img:"assets/c2a/rack-loose.webp", alt:"Outfit B: a white T-shirt, wide green trousers and white trainers" }, a:"A",
           hint:"Look at the legs of the trousers.", why:"Skinny jeans are tight — they stay close to your legs." },
         { title:"New or old?", q:"Which item had another owner before?", ua:"Яка річ мала іншого власника?",
-          left:{ w:"brand new", look:LOOK.newb, cap:"Trainers still in the box and a T-shirt with a NEW label" },
-          right:{ w:"second-hand", look:LOOK.second, cap:"A jacket and old boots from a charity shop — £4" }, a:"B",
+          left:{ w:"brand new", look:LOOK.newb, cap:"Trainers still in the box and a T-shirt with a NEW label", img:"assets/c2a/rack-new.webp", alt:"Outfit A: a white T-shirt with a NEW label and white trainers still in their box" },
+          right:{ w:"second-hand", look:LOOK.second, cap:"A jacket and old boots from a charity shop — £4", img:"assets/c2a/rack-second.webp", alt:"Outfit B: an old brown leather jacket on a hanger with a £4 price tag, a T-shirt and worn brown boots" }, a:"B",
           hint:"Look at the labels and the hanger.", why:"Second-hand clothes come from another person. They aren't new, but they can still look great!" },
         { title:"Formal or relaxed?", q:"Which outfit would you choose for a formal event?", ua:"Який образ ти обереш для офіційної події?",
           left:{ w:"casual", look:LOOK.casual, cap:"Jeans, a hoodie and a cap" },
-          right:{ w:"smart", look:LOOK.smart, cap:"A suit, a shirt and a tie" }, a:"B",
+          right:{ w:"smart", look:LOOK.smart, cap:"A suit, a shirt and a tie", img:"assets/c2a/rack-smart.webp", alt:"Outfit B: a dark blue suit, a white shirt, a dark blue tie, a belt and brown leather shoes" }, a:"B",
           hint:"Think about a wedding or a school ceremony.", why:"Smart clothes are for special, formal events. Casual clothes are for every day." },
         { title:"In or out?", q:"Which outfit looks popular right now?", ua:"Який образ виглядає популярним саме зараз?",
-          left:{ w:"trendy", look:LOOK.trendy, cap:"A big denim jacket, wide trousers, chunky trainers" },
-          right:{ w:"unfashionable", look:LOOK.unfash, cap:"A checked shirt, short trousers, socks with sandals" }, a:"A",
+          left:{ w:"trendy", look:LOOK.trendy, cap:"A short jacket, wide trousers and cool trainers", img:"assets/c2a/rack-trendy.webp", alt:"Outfit A: a short light blue jacket, a white T-shirt, wide beige trousers, a small bag and white trainers" },
+          right:{ w:"unfashionable", look:LOOK.unfash, cap:"A checked shirt, old-style trousers, socks with sandals", img:"assets/c2a/rack-unfash.webp", alt:"Outfit B: a green checked shirt, brown trousers with a belt, a gold watch and sandals with white socks" }, a:"A",
           hint:"Which outfit can you see on social media today?", why:"Trendy clothes are popular now. Unfashionable clothes look old-style." },
         { title:"Ready for the concert?", q:"Two friends are going to the school concert. Who looks ready for it?", ua:"Двоє друзів ідуть на шкільний концерт. Хто виглядає готовим?",
-          left:{ w:"badly-dressed", look:LOOK.badly, cap:"A dirty, creased T-shirt — but very expensive: £250!" },
-          right:{ w:"well-dressed", look:LOOK.well, cap:"A clean shirt and neat trousers — only £15" }, a:"B",
+          left:{ w:"badly-dressed", look:LOOK.badly, cap:"A dirty T-shirt and dirty trainers — but very expensive: £250!", img:"assets/c2a/rack-badly.webp", alt:"Outfit A: a grey T-shirt with dirty marks and a £250 price tag, grey joggers with a stain and dirty white trainers" },
+          right:{ w:"well-dressed", look:LOOK.well, cap:"A clean shirt and neat trousers — only £15", img:"assets/c2a/rack-well.webp", alt:"Outfit B: a clean light blue shirt with a £15 price tag, dark blue trousers with a belt and brown leather shoes" }, a:"B",
           hint:"Look at the clothes, not at the price.", why:"Outfit B looks neat, clean and right for a concert.",
           note:"Well-dressed does NOT mean expensive. It means your clothes look neat, clean and right for the situation. Outfit B costs only £15, but it looks great!" }
       ],
@@ -294,7 +303,9 @@ window.SIGNAL_LESSONS.c2a = {
         { who:"marko", t:"B is super comfy… but is it too boring?" }
       ],
       choice:{ from:"marko", q:"Which outfit should Marko choose?",
-        opts:[{ id:"A", label:"Outfit A", sub:"stylish, but very tight", look:LOOK.ckA }, { id:"B", label:"Outfit B", sub:"relaxed and easy to wear", look:LOOK.ckB }],
+        opts:[
+          { id:"A", label:"Outfit A", sub:"stylish, but very tight", look:LOOK.ckA, img:"assets/c2a/poll-a.webp", alt:"Outfit A: a black short-sleeved jacket, a black T-shirt with a lightning bolt, tight black jeans, sunglasses and black boots" },
+          { id:"B", label:"Outfit B", sub:"relaxed and easy to wear", look:LOOK.ckB, img:"assets/c2a/poll-b.webp", alt:"Outfit B: a green hoodie, loose blue jeans and white trainers" }],
         replies:{
           A:[{ who:"nate", t:"A! Style first, comfort later 😎" }, { who:"dana", t:"You'll be on your feet all day anyway. 😂" }],
           B:[{ who:"zoe", t:"B! Comfy clothes = happy Marko 😌" }, { who:"leo", t:"Agreed. You can't dance in those jeans. 😂" }]
@@ -323,10 +334,15 @@ window.SIGNAL_LESSONS.c2a = {
         { q:"Which style would you try?", idea:"I'd try the 1990s style. Big hoodies and caps look cool." },
         { q:"Which style would you never try?", idea:"I'd never try the hippie style. Flowers aren't for me! 🌼" }
       ],
+      /* порядок = літери на фото: A 1990s · B 1980s · C 1970s · D 1960s · E 1950s */
       looks:[
-        { id:"50s", look:LOOK.e50 }, { id:"60s", look:LOOK.e60 }, { id:"70s", look:LOOK.e70 }, { id:"80s", look:LOOK.e80 }, { id:"90s", look:LOOK.e90 }
+        { id:"90s", look:LOOK.e90, img:"assets/c2a/era-90s.webp", alt:"Look A: a blue FRESH hoodie, loose jeans, a gold chain, white trainers and a bucket hat" },
+        { id:"80s", look:LOOK.e80, img:"assets/c2a/era-80s.webp", alt:"Look B: a bright pink and purple jacket, a yellow T-shirt, light jeans with circles, pink sunglasses, white boots and a blue headband" },
+        { id:"70s", look:LOOK.e70, img:"assets/c2a/era-70s.webp", alt:"Look C: a black studded jacket, a black T-shirt, red tartan trousers, a chain and black boots" },
+        { id:"60s", look:LOOK.e60, img:"assets/c2a/era-60s.webp", alt:"Look D: a yellow shirt with flowers, flared jeans, round orange sunglasses, sandals and a flower headband" },
+        { id:"50s", look:LOOK.e50, img:"assets/c2a/era-50s.webp", alt:"Look E: a black jacket, a white shirt, a thin black tie, dark trousers, sunglasses and black shoes" }
       ],
-      teacher:"<p><b>3 хв</b>: картки епох і 2–3 питання — 1,5 хв, здогадка «образ → десятиліття» — 1,5 хв.</p><details><summary>Як вести</summary><p>Здогадки не перевіряються одразу: результат з'явиться в тексті-таймлайні (<i>Your guess: look B ✓</i>). Скажіть: <i>Don't worry if you're not sure.</i></p><p>Відповіді (не показуйте до читання): 1950s — шкіряна куртка й вузька краватка · 1960s — квіти й кльош · 1970s — рвана футболка, булавки, шотландка · 1980s — неон і великі плечі · 1990s — величезне худі, широкі джинси, панама.</p></details>"
+      teacher:"<p><b>3 хв</b>: картки епох і 2–3 питання — 1,5 хв, здогадка «образ → десятиліття» — 1,5 хв.</p><details><summary>Як вести</summary><p>Здогадки не перевіряються одразу: результат з'явиться в тексті-таймлайні (<i>Your guess: look B ✓</i>). Скажіть: <i>Don't worry if you're not sure.</i></p><p>Відповіді (не показуйте до читання): <b>A — 1990s</b> (худі FRESH, широкі джинси, ланцюжок, панама) · <b>B — 1980s</b> (яскрава куртка, рожеві окуляри, обідок) · <b>C — 1970s</b> (чорна куртка з шипами, штани в шотландку, ланцюг) · <b>D — 1960s</b> (сорочка з квітами, кльош, круглі окуляри, віночок) · <b>E — 1950s</b> (піджак, вузька краватка, темні окуляри). Порядок A–E фіксований — літери намальовані на фото.</p></details>"
     },
 
     /* 9 · READING --------------------------------------------------- */
@@ -522,7 +538,7 @@ window.SIGNAL_LESSONS.c2a = {
         { who:"marko", t:"No cap… but I found an old box in the wardrobe. 📦" },
         { who:"marko", t:"There's a photo inside." }
       ],
-      photo:{ img:null, alt:"An old concert photo from 1998. A teenage boy in a big denim jacket, baggy jeans and a bucket hat has his arms in the air." },
+      photo:{ img:"assets/c2a/dad-1998.webp", alt:"An old concert photo from 1998. A smiling teenage boy in a denim jacket, a white T-shirt and a bucket hat has his arms in the air." },
       msgsPhoto:[
         { who:"marko", t:"Wait…" },
         { who:"marko", t:"Is that my DAD?! 😳" },
@@ -550,7 +566,7 @@ window.SIGNAL_LESSONS.c2a = {
         unlocked:"Vocabulary unlocked: 12 words ✅",
         quote:["Fashion changes. Music changes.", "But your style tells a story. 😎"]
       },
-      teacher:"<p><b>2 хв.</b> Темний сюжетний екран: Марко знаходить коробку й старе фото тата. Учень сам <b>перевертає фото</b> (тап) — на звороті напис. Далі — «To be continued…» і анонс уроку 5.</p><details><summary>Важливо</summary><p>Past Simple <b>не пояснюємо</b>: питання анонсу (<i>What happened…? Where did… go?</i>) — це гачок для уроку 5. Можна спитати: <i>What do you think happened in 1998?</i> — учень відповідає як може.</p><p>Тато впізнається по джинсовій куртці, яка досі висить у шафі, — звідси назва серії «The Jacket Secret».</p><p>Реалістичне фото можна додати пізніше: покладіть вертикальну картинку (≈300 × 340, наприклад <code>dad-1998.webp</code>) у папку <code>assets/</code> і впишіть шлях у <code>photo.img</code>.</p></details>"
+      teacher:"<p><b>2 хв.</b> Темний сюжетний екран: Марко знаходить коробку й старе фото тата. Учень сам <b>перевертає фото</b> (тап) — на звороті напис. Далі — «To be continued…» і анонс уроку 5.</p><details><summary>Важливо</summary><p>Past Simple <b>не пояснюємо</b>: питання анонсу (<i>What happened…? Where did… go?</i>) — це гачок для уроку 5. Можна спитати: <i>What do you think happened in 1998?</i> — учень відповідає як може.</p><p>Тато впізнається по джинсовій куртці, яка досі висить у шафі, — звідси назва серії «The Jacket Secret».</p><p>Фото — <code>assets/c2a/dad-1998.webp</code> (вертикальне 300 : 340, шлях у <code>photo.img</code>). Якщо поле очистити (<code>img:null</code>), фото знову малюватиметься кодом.</p></details>"
     }
   ],
 
@@ -581,7 +597,7 @@ window.SIGNAL_LESSONS.c2a = {
     const p = st("preread");
     add(p, "eraCards", { key:"eras", title:p.title, say:p.say, ua:p.ua, eras:p.eras, qs:p.qs });
     add(p, "eraMatch", { key:"match", title:"Guess the decade 🕰️", say:"Match each outfit to a decade.", ua:"Зістав кожен образ із десятиліттям.",
-      decades:p.eras.filter(x => x.id !== "today"), looks:p.looks.map(l => ({ id:l.id, era:l.id, look:l.look })) });
+      decades:p.eras.filter(x => x.id !== "today"), fixed:true, looks:p.looks.map(l => ({ id:l.id, era:l.id, look:l.look, img:l.img, alt:l.alt })) });
 
     const rd = st("reading");
     add(rd, "timelineRead", { key:"tl", title:rd.title, say:rd.say, ua:rd.ua, sections:rd.sections, guess:{ stage:"preread", key:"match" } });
