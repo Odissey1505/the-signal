@@ -11,7 +11,7 @@
    КАРТИНКИ (необов'язкові). Поки поле null — показується намальована заміна, урок працює й так.
    Згенеруйте файл, покладіть у папку c2b всередині assets і впишіть шлях у MEDIA нижче:
      photo   — фото 1998 року: троє підлітків, спалах, вечір (квадрат 1:1)
-     outfits — образи A–D у сцені 2 (квадрат, літера на фото)
+     outfits — образи A–D у сцені 2 (квадрат; літера A–D підписується під фото)
      dad     — тато Марка сьогодні у вітальні зі старим фото в руках (4:3)
    Підказки для генерації — у README.md, розділ «Урок 5».
    ============================================================ */
@@ -20,11 +20,21 @@ window.SIGNAL_LESSONS = window.SIGNAL_LESSONS || {};
 (function(){
 /* ---------- картинки (null = намальована заміна) ---------- */
 const MEDIA = {
-  photo: null,     /* шлях: папка assets, c2b, файл photo-1998.webp */
-  photoAlt: "An old concert photo from 1998: three teenagers under stage lights. In the middle, a smiling boy in a denim jacket, a white T-shirt and a bucket hat has his arms in the air. On the left, a girl with long dark hair in a checked shirt. On the right, a boy in a red T-shirt and a dark cap.",
-  outfits: { A: null, B: null, C: null, D: null },   /* файли outfit-a.webp … outfit-d.webp */
-  dad: null,       /* файл dad-today.webp */
-  dadAlt: "Marko's dad today: a man in his forties on the sofa in a cosy living room. He is holding the old photo and smiling."
+  photo: "assets/c2b/photo-1998.webp",
+  photoAlt: "An old concert photo from 1998: under purple stage lights, a smiling teenage boy in a denim jacket with a red patch, a white T-shirt and a bucket hat has his arms in the air. On the right, a boy in a red T-shirt and a dark cap is watching the stage. Date stamp: '98 11 21.",
+  desk: "assets/c2b/desk-1998.webp",
+  deskAlt: "On an old wooden table: the 1998 photo with the words Best night ever. 1998, a concert ticket for the City Sound Festival on Saturday 21 November 1998, a brown diary from 1998, a cassette tape labelled 21.11.98 — LIVE and a denim jacket with a red patch.",
+  outfits: { A:"assets/c2b/outfit-a.webp", B:"assets/c2b/outfit-b.webp", C:"assets/c2b/outfit-c.webp", D:"assets/c2b/outfit-d.webp" },
+  wall: {           /* стіна доказів у сцені 9: фон + текстури карток (картки й нитка таймлайну — живі) */
+    bg:"assets/c2b/wall-1998.webp", polaroid:"assets/c2b/wall-polaroid.webp",
+    cream:"assets/c2b/paper-cream.webp", navy:"assets/c2b/paper-navy.webp",
+    tapeOn:"assets/c2b/tape-orange.webp", tapeOff:"assets/c2b/tape-blue.webp",
+    alt:"An evidence wall on a wooden board: the old 1998 photo with the words Best night ever. 1998, five pinned times from 5:00 p.m. to 11:45 p.m., and Dad's denim jacket with a red patch."
+  },
+  jacket: "assets/c2b/jacket.webp",   /* фінал (сцена 9): куртка з кишенею; кишеня й папірець — живі, поверх картинки */
+  jacketAlt: "Dad's old denim jacket with gold buttons, two chest pockets and a red patch with a white triangle.",
+  dad: "assets/c2b/dad-today.webp",
+  dadAlt: "Marko's dad today: a smiling man in his forties with short greying hair and a blue jumper. He is sitting on the sofa in a cosy living room under a warm lamp and holding up an old instant photo."
 };
 
 /* ---------- образи сцени 2 (flat lay, js/art/wardrobe.js) ---------- */
@@ -107,7 +117,7 @@ window.SIGNAL_LESSONS.c2b = {
   get characters(){
     const base = (window.SIGNAL_LESSONS.c1a || {}).characters || {};
     return Object.assign({}, base, {
-      dad: { name:"Dad", img:MEDIA.dad, face:{ x:50, y:34 }, look:{ hair:"short", colour:"#1E1612", skin:"#7A4B32", top:"#4D6E9C", mood:"smile" } },
+      dad: { name:"Dad", img:MEDIA.dad, face:{ x:50, y:29 }, look:{ hair:"short", colour:"#1E1612", skin:"#7A4B32", top:"#4D6E9C", mood:"smile" } },
       unknown: { name:"Unknown sender", look:{ hair:"short", colour:"#172033", skin:"#2A3550", top:"#172033" } }
     });
   },
@@ -126,19 +136,19 @@ window.SIGNAL_LESSONS.c2b = {
       chat:[
         { sys:"Saturday · 10:14" },
         { who:"marko", t:"Hey! Remember the photo I found? 📸" },
-        { who:"marko", t:"Look — it was folded in half. My dad wasn't alone!", unfold:true },
+        { who:"marko", t:"Look at the guy in the red T-shirt on the right. My dad wasn't alone!" },
         { who:"marko", t:"I asked my dad about it. He said something really strange…" },
         { who:"dad", fwd:true, t:"That night changed everything." },
         { who:"marko", t:"What happened in 1998? Can you help me find out?" }
       ],
       qs:[
-        { q:"Who can you see in this photograph?", ua:"Кого ти бачиш на цій фотографії?", ex:"I can see three teenagers in the photograph." },
-        { q:"What are they wearing?", ua:"У що вони вдягнені?", ex:"They're wearing denim jackets, jeans and casual clothes." },
+        { q:"Who can you see in this photograph?", ua:"Кого ти бачиш на цій фотографії?", ex:"I can see Marko's dad and another boy in a red T-shirt." },
+        { q:"What are they wearing?", ua:"У що вони вдягнені?", ex:"Marko's dad is wearing a denim jacket, a white T-shirt and a bucket hat. The other boy is wearing a red T-shirt and a cap." },
         { q:"Do their clothes look fashionable today? Why or why not?", ua:"Чи виглядає їхній одяг модним сьогодні? Чому?", ex:"Some clothes look old-fashioned, but denim jackets are still trendy." },
         { q:"What do you think happened that night?", ua:"Як ти думаєш, що сталося тієї ночі?", ex:"Maybe they went to a concert or met someone special." }
       ],
       dadNote:"Look for my old diary. It might help you remember the story.",
-      teacher:"<p><b>4 хв</b>: чат — 1 хв, чотири питання — 3 хв.</p><details><summary>Як вести</summary><ul><li>Екран 1: повідомлення з'являються самі (<b>Show all</b> — одразу). На другому повідомленні фото «розгортається» — тато на ньому не сам. Спитайте: <i>Who do you think the other two people are?</i></li><li>Екран 2: питання по одному. <b>Need an example?</b> — зразок, відкривайте лише якщо учень застряг.</li><li>Past Simple ще не пояснюємо: якщо учень каже <i>Maybe they go to a concert</i> — просто перефразуйте: <i>Maybe they went to a concert. Good idea!</i></li><li>Після четвертого питання тато пише про щоденник — учень сам натискає на щоденник (<b>OPEN THE DIARY</b>).</li></ul></details><details><summary>Факти історії (тримайте однаково весь урок)</summary><p>Субота, <b>21 листопада 1998</b> (як у штампі на фото з Уроку 4: <i>'98 11 21</i>). Тато (тоді 17 років), друзі <b>Emma</b> (ліворуч на фото, у картатій сорочці) і <b>Alex</b> (праворуч, червона футболка й кепка). Музичний фестиваль City Sound у міському клубі. 17:00 — тато купив вживану джинсову куртку з червоною нашивкою, 19:00 — зустрів друзів, 22:30 — слухали гурт, 23:00 — тато вперше грав на гітарі на сцені, 23:45 — фото зробила <b>незнайома дівчина з натовпу</b> камерою Emma. Хто вона — тато не знає (гачок до невідомого відправника у фіналі).</p></details>"
+      teacher:"<p><b>4 хв</b>: чат — 1 хв, чотири питання — 3 хв.</p><details><summary>Як вести</summary><ul><li>Екран 1: повідомлення з'являються самі (<b>Show all</b> — одразу). Марко звертає увагу на хлопця в червоній футболці праворуч. Спитайте: <i>Who do you think the boy in the red T-shirt is?</i></li><li>Екран 2: питання по одному. <b>Need an example?</b> — зразок, відкривайте лише якщо учень застряг.</li><li>Past Simple ще не пояснюємо: якщо учень каже <i>Maybe they go to a concert</i> — просто перефразуйте: <i>Maybe they went to a concert. Good idea!</i></li><li>Після четвертого питання тато пише про щоденник — учень сам натискає на щоденник (<b>OPEN THE DIARY</b>).</li></ul></details><details><summary>Факти історії (тримайте однаково весь урок)</summary><p>Субота, <b>21 листопада 1998</b> (як у штампі на фото з Уроку 4: <i>'98 11 21</i>). Тато (тоді 17 років), друзі <b>Alex</b> (на фото праворуч, спиною: червона футболка й кепка) і <b>Emma</b> (на фото її немає). Музичний фестиваль City Sound у міському клубі. 17:00 — тато купив вживану джинсову куртку з червоною нашивкою, 19:00 — зустрів друзів, 22:30 — слухали гурт, 23:00 — тато вперше грав на гітарі на сцені, 23:45 — фото зробила <b>незнайома дівчина з натовпу</b> камерою Emma. Хто вона — тато не знає (гачок до невідомого відправника у фіналі).</p></details>"
     },
 
     /* ========== SCENE 2 · BACK TO THE 90s ========== */
@@ -149,19 +159,19 @@ window.SIGNAL_LESSONS.c2b = {
       bank:["trendy", "unfashionable", "smart", "casual", "skinny", "loose-fitting", "well-dressed", "badly-dressed", "brand new", "second-hand", "comfortable", "uncomfortable"],
       outfits:[
         { id:"A", cap:"Loose-fitting jeans, a denim jacket and trainers", look:LOOK.A, img:MEDIA.outfits.A,
-          alt:"Outfit A: a big light-blue denim jacket with a red patch, a white T-shirt, loose-fitting jeans, white trainers and a bucket hat",
+          alt:"Outfit A: a denim jacket with a red patch, a white T-shirt, wide blue jeans, white trainers with an orange stripe and a beige bucket hat",
           core:["loose-fitting", "casual", "comfortable"], ok:["trendy", "second-hand", "well-dressed", "unfashionable"],
           sample:"Outfit A is casual and comfortable. The jeans are loose-fitting." },
         { id:"B", cap:"A smart suit and polished shoes", look:LOOK.B, img:MEDIA.outfits.B,
-          alt:"Outfit B: a dark suit, a white shirt, a brown tie and polished black shoes",
+          alt:"Outfit B: a dark navy suit, a white shirt, a brown tie, a black belt and polished black shoes",
           core:["smart", "well-dressed"], ok:["uncomfortable", "brand new", "unfashionable", "trendy"],
           sample:"Outfit B is smart. He looks well-dressed, but a suit can be uncomfortable." },
         { id:"C", cap:"Skinny jeans and a fashionable jacket", look:LOOK.C, img:MEDIA.outfits.C,
-          alt:"Outfit C: a short teal jacket, a black band T-shirt, skinny black jeans, sunglasses and high-top trainers",
+          alt:"Outfit C: a short green bomber jacket, a black T-shirt with a lightning bolt, skinny black jeans, black sunglasses and white high-top trainers",
           core:["skinny", "trendy"], ok:["casual", "well-dressed", "brand new", "uncomfortable", "comfortable"],
           sample:"Outfit C is trendy. The jeans are skinny, so maybe they're a bit uncomfortable." },
         { id:"D", cap:"Second-hand clothes and an oversized shirt", look:LOOK.D, img:MEDIA.outfits.D,
-          alt:"Outfit D: a big checked shirt with a £3 price tag, wide brown trousers and old brown boots",
+          alt:"Outfit D: a big checked shirt with a £3 price tag, loose brown trousers and old brown leather boots",
           core:["second-hand", "loose-fitting", "casual"], ok:["comfortable", "unfashionable", "badly-dressed", "trendy"],
           sample:"Outfit D is second-hand and casual. The shirt is loose-fitting and comfortable." }
       ],

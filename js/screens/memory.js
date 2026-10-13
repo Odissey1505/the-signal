@@ -241,7 +241,7 @@ function photo(les, o){
   o = o || {}; const m = les.media || {};
   const label = m.photoAlt || "An old photo from 1998";
   const img = m.photo ? `<img src="${esc(m.photo)}" alt="${esc(label)}" decoding="async">` : photoSVG(label);
-  return `<figure class="tm-polaroid ${o.cls || ""}" ${o.id ? `id="${o.id}"` : ""} style="--rot:${o.rot == null ? -3 : o.rot}deg"><div class="tm-pimg">${img}<span class="tm-crease" aria-hidden="true"></span></div><figcaption>${o.caption === false ? "" : "Best night ever. 1998."}</figcaption></figure>`;
+  return `<figure class="tm-polaroid ${m.photo ? "real" : ""} ${o.cls || ""}" ${o.id ? `id="${o.id}"` : ""} style="--rot:${o.rot == null ? -3 : o.rot}deg"><div class="tm-pimg">${img}${m.photo ? "" : `<span class="tm-crease" aria-hidden="true"></span>`}</div><figcaption>${o.caption === false ? "" : "Best night ever. 1998."}</figcaption></figure>`;
 }
 function cassette(o){
   o = o || {};
@@ -293,7 +293,7 @@ function dadArt(les, o){
 }
 function dadFrame(les, o){
   o = o || {};
-  return `<figure class="tm-dad ${o.cls || ""}"><div class="tm-dad-img">${dadArt(les)}<span class="tm-live" aria-hidden="true">● video call</span></div><figcaption><b>Marko's dad</b><span>The witness · 17 years old in 1998</span></figcaption></figure>`;
+  return `<figure class="tm-dad ${o.cls || ""}"><div class="tm-dad-img ${(les.media || {}).dad ? "real" : ""}">${dadArt(les)}<span class="tm-live" aria-hidden="true">● video call</span></div><figcaption><b>Marko's dad</b><span>The witness · 17 years old in 1998</span></figcaption></figure>`;
 }
 const ICON = {
   jacket: `<path d="M8 3l4 2.5L16 3l5 3-1.6 5.5L17 10.6V21H7V10.6l-2.4.9L3 6z"/><path d="M12 5.5V21M9 13h1.8M13.2 13H15"/>`,
@@ -311,6 +311,7 @@ function outfitPic(o, label){
 
 /* ============================================================
    SCENE 1 · tmDesk — обкладинка-стіл: фото, речі 1998 року й чат Марка
+   (les.media.desk — готова картинка столу; без неї стіл збирається з намальованих речей)
    data: { hero:{kicker,title,emoji,tagline}, chat:[{sys}|{who,t,fwd,unfold}] }
    ============================================================ */
 define("tmDesk", (el, scr, ctx) => {
@@ -322,13 +323,13 @@ define("tmDesk", (el, scr, ctx) => {
         <h2 class="tm-hero-title" id="stitle" tabindex="-1">${esc(h.title)} <span aria-hidden="true">${h.emoji || ""}</span></h2>
         <p class="tm-hero-tag">${esc(h.tagline)}</p></div>
       <div class="tm-hero-grid">
-        <div class="tm-desk">
+        ${les.media && les.media.desk ? `<div class="tm-desk has-img"><img src="${esc(les.media.desk)}" alt="${esc(les.media.deskAlt || "")}" decoding="async"></div>` : `<div class="tm-desk">
           <div class="tm-prop tm-prop-jacket" aria-hidden="true">${jacketArt()}</div>
           <div class="tm-prop tm-prop-book">${notebook()}</div>
           <div class="tm-prop tm-prop-tape">${cassette({ label: tapeLabel(les) })}</div>
           <div class="tm-prop tm-prop-ticket">${ticket(les)}</div>
           ${photo(les, { cls: A.unfolded ? "unfolded" : "folded", rot:-4, id:"tm-ph" })}
-        </div>
+        </div>`}
         <div class="tm-phone">
           <div class="tm-phone-head">${ava(les, "marko")}<div><b>Marko</b><small>online</small></div></div>
           <div class="tm-thread" id="th" aria-live="polite"></div>
@@ -937,6 +938,32 @@ define("tmAboutYou", (el, scr, ctx) => {
   draw();
 }, { label: () => "About you" });
 
+
+/* стіна доказів (сцена 9): готова картинка-фон (les.media.wall) + живі картки доказів поверх неї;
+   без картинки — стара стіна, зібрана з намальованих речей */
+function evidenceWall(les, c, board, anim){
+  const W = (les.media || {}).wall;
+  const events = les.stages.find(s => s.id === "timeline").events;
+  const tl = `<ol class="tm-wall-tl ${board.solved ? "solved" : ""}" aria-label="The timeline">${events.map(x => `<li><b>${esc(x.time)}</b>${icon(x.icon)}</li>`).join("")}</ol>`;
+  if (!W) return `<div class="tm-wall" aria-label="Everything you found">
+        <div class="tm-wall-photo">${photo(les, { cls:"unfolded small", rot:-6 })}</div>
+        <div class="tm-wall-clues">${[1, 2, 3, 4].map(k => c.clues[k] ? clueCard(les, k, { mini:true }) : `<div class="tm-clue mini off"><span class="tm-clue-k">Clue #${k}</span><p>Not found yet</p></div>`).join("")}</div>
+        <div class="tm-wall-jacket" aria-hidden="true">${jacketArt()}</div>
+        ${tl}
+      </div>`;
+  let n = 0;
+  const cards = [1, 2, 3, 4].map(k => { const on = !!c.clues[k]; const i = on ? n++ : 0;
+    return `<div class="tm-wcard s${k} ${on ? "found" : "missing"} ${on && anim ? "drop" : ""}" style="--d:${(i * .18 + .15).toFixed(2)}s;background-image:url('${esc(on ? W.cream : W.navy)}')">
+        <span class="tm-wtape" style="background-image:url('${esc(on ? W.tapeOn : W.tapeOff)}')" aria-hidden="true"></span><span class="tm-clue-k">Clue #${k}</span><p>${on ? esc(les.clues[k].t) : "Not found yet"}</p></div>`; }).join("");
+  const str = [1, 2, 3, 4].map(k => `<i class="tm-wstr s${k}" style="--d:${(.9 + k * .22).toFixed(2)}s" aria-hidden="true"></i>`).join("");
+  return `<div class="tm-wall img ${board.solved ? "solved" : ""} ${anim ? "anim" : ""}" role="group" aria-label="Everything you found: the photo, ${Object.keys(c.clues).length} of 4 clues, the timeline of the night">
+      <img class="tm-wall-bg" src="${esc(W.bg)}" alt="${esc(W.alt || "")}" decoding="async">
+      <img class="tm-wall-pol" src="${esc(W.polaroid)}" alt="" decoding="async">
+      ${[1, 2, 3, 4].map(k => `<div class="tm-wslot s${k}" style="background-image:url('${esc(W.navy)}')" aria-hidden="true"><span class="tm-wtape" style="background-image:url('${esc(W.tapeOff)}')"></span></div>`).join("")}
+      <div class="tm-wclues">${cards}</div>${str}${tl}
+    </div>`;
+}
+
 /* ============================================================
    SCENE 9 · tmExit — три завдання → MISSION COMPLETED + підсумок
    data: { tasks:{fill,choose,speak}, done:{title,text}, learned:[..] }
@@ -945,17 +972,13 @@ define("tmExit", (el, scr, ctx) => {
   const d = scr.data, les = ctx.les, A = store(ctx, scr, "exit");
   A.fill = A.fill || {}; A.choose = A.choose || {};
   const T = Toggles(); let fresh = false;
+  let wallAnim = !reduced();            /* анімація стіни — лише під час першого показу екрана */
   const tk = d.tasks;
   const ready = () => textDone(A.fill) && mcqDone(A.choose);
   const draw = () => {
     const c = CASE(ctx); const board = (ctx.all.timeline && ctx.all.timeline.board) || {};
     el.innerHTML = `${sceneHead(ctx, ctx.scr.stage.intro)}
-      <div class="tm-wall" aria-label="Everything you found">
-        <div class="tm-wall-photo">${photo(les, { cls:"unfolded small", rot:-6 })}</div>
-        <div class="tm-wall-clues">${[1, 2, 3, 4].map(k => c.clues[k] ? clueCard(les, k, { mini:true }) : `<div class="tm-clue mini off"><span class="tm-clue-k">Clue #${k}</span><p>Not found yet</p></div>`).join("")}</div>
-        <div class="tm-wall-jacket" aria-hidden="true">${jacketArt()}</div>
-        <ol class="tm-wall-tl ${board.solved ? "solved" : ""}" aria-label="The timeline">${(les.stages.find(s => s.id === "timeline").events).map(x => `<li><b>${esc(x.time)}</b>${icon(x.icon)}</li>`).join("")}</ol>
-      </div>
+      ${evidenceWall(les, c, board, wallAnim)}
       <div class="tm-exits">
         <div class="card"><p class="tm-q"><span class="tm-qn">1</span><span>Complete: ${fmt(tk.fill.q)}</span></p>${textRow("fill", tk.fill, A.fill, { label:"The missing verb", ph:"…" })}</div>
         <div class="card">${mcq("choose", tk.choose, A.choose, { num:2, T })}</div>
@@ -969,6 +992,7 @@ define("tmExit", (el, scr, ctx) => {
           <div class="tm-learned"><h4>Today you learned to:</h4><ul>${d.learned.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
         </div>` : `<div class="tm-locked"><span aria-hidden="true">🔒</span><p>Finish tasks 1 and 2 to complete the mission.</p></div>`}</div>`;
     ctx.setCTA({ label:"See what Marko found →" });
+    wallAnim = false;
   };
   const maybeDone = () => { if (ready()){ if (earn(ctx, "mystery")) fresh = true; } };
   el.onclick = e => {
@@ -992,7 +1016,7 @@ define("tmJacket", (el, scr, ctx) => {
   const d = scr.data, les = ctx.les, A = store(ctx, scr, "jacket");
   el.innerHTML = `<div class="story-screen tm-end">
       <p class="tm-endline" id="l1">${esc(d.scene)}</p>
-      <div class="tm-endjacket" id="jk"><div class="tm-jk">${jacketArt("Dad's old denim jacket")}</div>
+      <div class="tm-endjacket ${(les.media || {}).jacket ? "real" : ""}" id="jk"><div class="tm-jk">${(les.media || {}).jacket ? `<img src="${esc(les.media.jacket)}" alt="${esc(les.media.jacketAlt || "Dad's old denim jacket")}" decoding="async">` : jacketArt("Dad's old denim jacket")}</div>
         <button class="tm-pocket" type="button" data-pocket disabled aria-label="Check the pocket"><span aria-hidden="true">👆</span></button>
         <div class="tm-paper" id="pp" hidden aria-hidden="true"><span></span></div></div>
       <p class="tm-endline" id="l2" hidden>${esc(d.smile)}</p>

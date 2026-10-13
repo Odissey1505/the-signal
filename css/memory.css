@@ -172,6 +172,7 @@ body[data-episode-theme="memory"] :focus-visible{outline:3px solid var(--tm-oran
 .tm-prop-tape{right:3%;bottom:6%;width:30%;transform:rotate(8deg)}
 .tm-prop-ticket{left:2%;top:5%;width:29%;transform:rotate(-11deg)}
 .tm-desk .tm-polaroid{position:absolute;left:28%;top:7%;width:44%}
+.tm-desk.has-img img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* полароїд, складений утричі */
 .tm-polaroid{margin:0;background:#FBF8F1;padding:4.5% 4.5% 0;border-radius:3px;transform:rotate(var(--rot,-3deg));box-shadow:0 2px 3px rgba(0,0,0,.18),0 18px 30px -14px rgba(0,0,0,.55)}
@@ -186,6 +187,7 @@ body[data-episode-theme="memory"] :focus-visible{outline:3px solid var(--tm-oran
 .tm-polaroid:not(.folded):not(.unfolded) .tm-pimg::before,.tm-polaroid:not(.folded):not(.unfolded) .tm-pimg::after{display:none}
 .tm-crease{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,transparent calc(33.4% - 1px),rgba(255,255,255,.35) 33.4%,transparent calc(33.4% + 2px),transparent calc(66.6% - 1px),rgba(255,255,255,.35) 66.6%,transparent calc(66.6% + 2px));opacity:0;transition:opacity .4s 1s}
 .tm-polaroid.unfolded .tm-crease{opacity:1}
+.tm-polaroid.real .tm-pimg::before,.tm-polaroid.real .tm-pimg::after{display:none}
 .tm-polaroid figcaption{font-family:var(--tm-hand);color:var(--tm-ink-blue);text-align:center;font-size:clamp(1rem,2.2vw,1.4rem);padding:.45em 0 .55em;transform:rotate(-2deg)}
 .tm-polaroid.big{max-width:420px;margin:6px auto 0}
 .tm-polaroid.small{width:140px}
@@ -485,6 +487,8 @@ button.tm-book{cursor:pointer}
 .tm-dad{margin:0;background:var(--surface);border-radius:20px;padding:8px;box-shadow:var(--shadow)}
 .tm-dad-img{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#2A1F24}
 .tm-dad-img img,.tm-dad-img svg{width:100%;height:100%;object-fit:cover;display:block}
+.tm-dad-img.real{aspect-ratio:1245/782}
+.tm-dad-img.real img{object-position:50% 30%}
 .tm-live{position:absolute;left:10px;top:10px;background:rgba(5,7,13,.6);color:#fff;border-radius:999px;padding:.2em .7em;font-size:.78rem;font-weight:800}
 .tm-dad figcaption{display:flex;flex-direction:column;padding:8px 6px 4px}
 .tm-dad figcaption span{color:var(--muted);font-weight:700;font-size:.9rem}
@@ -542,6 +546,13 @@ body.story[data-episode-theme="memory"] .dock{background:rgba(13,19,32,.92)}
 .tm-endline{font-family:var(--tm-hand);font-size:clamp(1.3rem,3vw,1.7rem);line-height:1.4;margin:.6em 0;color:#E6DCCB}
 .tm-endjacket{position:relative;width:min(300px,70vw);margin:10px auto}
 .tm-jk svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6))}
+/* реальна картинка куртки: кишеня — права нагрудна кишеня (≈68% / 34% картинки) */
+.tm-endjacket.real{width:min(400px,82vw)}
+.tm-endjacket.real .tm-jk img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6))}
+.tm-endjacket.real .tm-pocket{left:calc(68.2% - 31px);top:calc(33.7% - 31px)}
+.tm-endjacket.real .tm-paper{left:61%;top:15.5%;width:16%;height:13%;z-index:2}
+.tm-endjacket.real .tm-jk{position:relative;z-index:1}
+.tm-endjacket.real .tm-pocket{z-index:2}
 .tm-pocket{position:absolute;left:56%;top:26%;width:62px;height:62px;border-radius:50%;border:0;background:rgba(233,154,85,.0);cursor:pointer;font-size:1.6rem;display:grid;place-items:center;color:transparent}
 .tm-pocket.pulse{background:rgba(233,154,85,.22);color:inherit;box-shadow:0 0 0 0 rgba(233,154,85,.6);animation:tmpocket 1.6s infinite}
 .tm-pocket[disabled]{cursor:default;animation:none;background:transparent;color:transparent}
@@ -568,6 +579,51 @@ body.story[data-episode-theme="memory"] .tpanel{background:#2A2618}
 /* базове .card + .card додає відступ зверху — у сітках він зайвий */
 .tm-checkgrid > .card,.tm-exits > .card{margin-top:0}
 .tm-exits .tm-opts.two{grid-template-columns:1fr}
+
+/* ---------- стіна доказів із картинкою (сцена 9) ---------- */
+.tm-wall.img{display:block;position:relative;padding:0;aspect-ratio:2160/518;container-type:inline-size;background:#3A2A22;overflow:hidden;border-radius:22px;box-shadow:var(--shadow-lg)}
+.tm-wall.img .tm-wall-bg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tm-wall.img .tm-wall-pol,.tm-wall.img .tm-wall-tl{display:none}
+.tm-wall.img .tm-wclues{position:absolute;inset:0;z-index:2}
+.tm-wall.img .tm-wstr{z-index:3}
+.tm-wslot{position:absolute;background-color:#1F2C4A;background-position:center;background-size:100% 100%;border-radius:2px;box-shadow:0 .5cqw 1.2cqw -.4cqw rgba(0,0,0,.55)}
+.tm-wcard{position:absolute;box-sizing:border-box;padding:2.6cqw 1.4cqw 1cqw 1.75cqw;background-color:#E9DFC9;background-position:center;background-size:100% 100%;background-repeat:no-repeat;box-shadow:0 .5cqw 1.2cqw -.4cqw rgba(0,0,0,.55);border-radius:2px;color:#172033}
+.tm-wtape{position:absolute;background-position:center;background-size:100% 100%;background-repeat:no-repeat;box-shadow:0 .1cqw .3cqw rgba(0,0,0,.25);z-index:1}
+.tm-wcard .tm-clue-k{display:block;font-family:var(--tm-type);font-size:1.5cqw;letter-spacing:.04em;color:#A4532A;line-height:1.2}
+.tm-wcard p{margin:.5cqw 0 0;font-weight:800;font-size:1.3cqw;line-height:1.38}
+.tm-wcard.missing{background-color:#1F2C4A;color:#E8E1D3}
+.tm-wcard.missing .tm-clue-k{color:#E8E1D3}
+.tm-wcard.missing p{color:#C3CAD8;font-weight:600}
+.tm-wall.img.anim .tm-wcard.drop{animation:tmpin .7s var(--d) cubic-bezier(.2,.8,.2,1) both}
+@keyframes tmpin{0%{opacity:0;transform:translateY(-14%) rotate(-5deg) scale(1.04)}70%{opacity:1;transform:translateY(1%) rotate(.6deg)}100%{transform:none}}
+.tm-wstr{position:absolute;height:.32cqw;min-height:2px;background:#D9362B;border-radius:2px;box-shadow:0 0 .4cqw rgba(217,54,43,.55);transform:scaleX(0);transform-origin:0 50%}
+.tm-wall.img.solved .tm-wstr{transform:none}
+.tm-wall.img.solved.anim .tm-wstr{animation:tmstring .5s var(--d) cubic-bezier(.6,.05,.25,1) both}
+.tm-wall.img .tm-wcard.s1,.tm-wall.img .tm-wslot.s1{left:17.22%;top:7.34%;width:16.76%;height:66.99%}
+.tm-wall.img .tm-wcard.s1 .tm-wtape,.tm-wall.img .tm-wslot.s1 .tm-wtape{left:24.86%;top:-6.05%;width:44.75%;height:17.58%}
+.tm-wall.img .tm-wcard.s2,.tm-wall.img .tm-wslot.s2{left:34.21%;top:6.56%;width:16.62%;height:66.80%}
+.tm-wall.img .tm-wcard.s2 .tm-wtape,.tm-wall.img .tm-wslot.s2 .tm-wtape{left:29.53%;top:-4.91%;width:41.23%;height:17.05%}
+.tm-wall.img .tm-wcard.s3,.tm-wall.img .tm-wslot.s3{left:51.06%;top:6.95%;width:16.57%;height:67.76%}
+.tm-wall.img .tm-wcard.s3 .tm-wtape,.tm-wall.img .tm-wslot.s3 .tm-wtape{left:30.45%;top:-5.41%;width:36.87%;height:16.81%}
+.tm-wall.img .tm-wcard.s4,.tm-wall.img .tm-wslot.s4{left:67.59%;top:6.95%;width:16.39%;height:68.73%}
+.tm-wall.img .tm-wcard.s4 .tm-wtape,.tm-wall.img .tm-wslot.s4 .tm-wtape{left:33.33%;top:-5.34%;width:39.55%;height:17.13%}
+.tm-wall.img .tm-wstr.s1{left:26.67%;width:5.32%}
+.tm-wall.img .tm-wstr.s2{left:41.02%;width:4.86%}
+.tm-wall.img .tm-wstr.s3{left:55.00%;width:5.00%}
+.tm-wall.img .tm-wstr.s4{left:69.17%;width:5.00%}
+.tm-wall.img .tm-wstr{top:86.87%}
+@media (max-width:900px){
+  .tm-wall.img{aspect-ratio:auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"pol" "clues" "tl";gap:14px;padding:16px;background:radial-gradient(120% 90% at 30% 20%,rgba(255,214,160,.18),transparent 60%),linear-gradient(160deg,#5A4337,#3A2A22);container-type:normal}
+  .tm-wall.img .tm-wall-bg,.tm-wall.img .tm-wstr,.tm-wall.img .tm-wslot{display:none}
+  .tm-wall.img .tm-wall-pol{display:block;grid-area:pol;width:min(180px,52%);justify-self:center;height:auto;clip-path:polygon(0.8% 9.5%,87.6% 0.3%,99.6% 90.2%,11.4% 99.7%)}
+  .tm-wall.img .tm-wpolwrap{grid-area:pol}
+  .tm-wall.img .tm-wall-tl{display:flex;grid-area:tl}
+  .tm-wall.img .tm-wcard{position:relative;left:auto!important;top:auto!important;width:auto!important;height:auto!important;padding:22px 12px 14px;min-height:110px}
+  .tm-wall.img .tm-wclues{position:static;grid-area:clues;display:grid;grid-template-columns:1fr 1fr;gap:14px 10px;align-content:start}
+  .tm-wcard .tm-clue-k{font-size:.85rem}
+  .tm-wcard p{margin-top:4px;font-size:.88rem}
+  .tm-wall.img .tm-wcard .tm-wtape{left:30%!important;top:-8px!important;width:40%!important;height:16px!important}
+}
 
 /* ---------- запасний варіант без малюнка ---------- */
 .tm-nopic{aspect-ratio:320/340;display:grid;place-items:center;padding:12px;text-align:center;font-weight:700;color:var(--ink-2);background:var(--surface-2)}
