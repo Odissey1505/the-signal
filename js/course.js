@@ -41,7 +41,7 @@ window.SIGNAL_COURSE = {
         banner: "assets/covers/c2-banner.webp", bannerAlt: "The Jacket Secret — Zoe, Leo, Dana, Nate, outfits from different decades, Marko and an old photo from 1998.",
         lessons: [
           { id: "c2a", type: "A", title: "What's Your Style?", tags: ["Vocabulary", "Reading"], content: true, file: "lessons/c2a-whats-your-style.js" },
-          { id: "c2b", type: "B", title: "Best night ever", tags: ["Grammar", "Listening"] },
+          { id: "c2b", type: "B", title: "The Fashion Time Machine", tags: ["Grammar", "Reading"], content: true, file: "lessons/c2b-fashion-time-machine.js" },
           { id: "c2c", type: "C", title: "Swap shop challenge", tags: ["Final Mission", "Reading"] }
         ]
       },

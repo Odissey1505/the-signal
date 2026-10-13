@@ -443,7 +443,8 @@ function renderWords(){
   const suggest = allVocab().filter(v => started.includes(v.lesson) && !(state.words[v.w] && state.words[v.w].added));
   const pass = v => wordFilter === "all" ? true : wordFilter === "star" ? state.words[v.w].star : status(v.w) === wordFilter;
   const list = mine.filter(pass);
-  const groups = [["personality","Personality"],["hair","Appearance"]];
+  const GROUP_LABEL = { personality:"Personality", hair:"Appearance", style:"Clothes & style", adverb:"Adverbs" };
+  const groups = [...new Set(mine.map(v => v.g || "other"))].map(g => [g, GROUP_LABEL[g] || "Other words"]);
   const counts = { all:mine.length, new:0, learning:0, familiar:0, mastered:0, star:mine.filter(v => state.words[v.w].star).length };
   mine.forEach(v => counts[status(v.w)]++);
   const row = v => `<div class="wrow">
@@ -460,7 +461,7 @@ function renderWords(){
     <p class="muted" style="margin-top:-6px">New → Learning → Familiar → Mastered. Every right answer moves a word forward; practice brings back the weakest words first.</p>
     ${mine.length ? `
       <div class="filter">${[["all","All"],["new","New"],["learning","Learning"],["familiar","Familiar"],["mastered","Mastered"],["star","⭐ Starred"]].map(f => `<button class="chip sm ${wordFilter === f[0] ? "on" : ""}" type="button" data-filter="${f[0]}">${f[1]} ${counts[f[0]]}</button>`).join("")}</div>
-      ${groups.map(g => { const items = list.filter(v => v.g === g[0]); return items.length ? `<div class="section-title" style="margin-top:18px"><h2>${g[1]}</h2></div><div class="wlist">${items.map(row).join("")}</div>` : ""; }).join("") || `<div class="empty"><p class="muted">No words with this status yet.</p></div>`}`
+      ${groups.map(g => { const items = list.filter(v => (v.g || "other") === g[0]); return items.length ? `<div class="section-title" style="margin-top:18px"><h2>${g[1]}</h2></div><div class="wlist">${items.map(row).join("")}</div>` : ""; }).join("") || `<div class="empty"><p class="muted">No words with this status yet.</p></div>`}`
     : `<div class="empty"><div class="big">📚</div><h3>Your word bank is empty</h3><p class="muted">In an episode, tap “+ My words” on a word card to collect it.</p><a class="btn primary" href="#/">Go to the course</a></div>`}
     ${suggest.length ? `<div class="section-title"><h2>From your episodes</h2><button class="btn small" type="button" data-addall>+ Add all ${suggest.length}</button></div>
       <div class="wlist">${suggest.map(v => `<div class="wrow"><div class="wm"><b>${esc(v.w)}</b><small>🇺🇦 ${esc(v.ua)}</small></div>${sayBtn(v.w)}<button class="btn small" type="button" data-add="${v.w}">+ Add</button></div>`).join("")}</div>` : ""}`);
