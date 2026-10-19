@@ -6,7 +6,7 @@
    SignalArt.oldPhoto()    — старе концертне фото 1998 року (лицьовий бік)
    SignalArt.photoBack()   — зворотний бік фото з підписом
    item = { k:"hoodie", c:"#2F7DE1", …опції }   (див. список KINDS нижче)
-   spec = { top, outer, bottom, shoes, extras:[…], tags:[…], bg:"linen"|"none" }
+   spec = { top, outer, bottom, dress, shoes, extras:[…], tags:[…], bg:"linen"|"none" }   (dress — замість top/bottom)
    Без зовнішніх картинок: усе малюється кодом і працює офлайн.
    ============================================================ */
 (function(){
@@ -277,6 +277,17 @@ const TAG = {
 /* ============================================================
    ЗБИРАННЯ ОБРАЗУ
    ============================================================ */
+/* сукня (полотно 160 × 244): у образі займає місце верху й низу */
+const DRESS = "M54,8 Q80,24 106,8 L118,12 Q128,30 124,58 L116,84 Q140,160 154,232 Q80,246 6,232 Q20,160 44,84 L36,58 Q32,30 42,12 Z";
+function dress(o){
+  const c = o.c || "#E8590C";
+  return shape(DRESS, c, { pat:o.pat })
+    + `<path d="M58,10 Q80,30 102,10" fill="none" stroke="${dk(c, .3)}" stroke-width="2.4"/>`
+    + `<path d="M44,84 Q80,92 116,84 L117,94 Q80,102 43,94 Z" fill="${o.belt || dk(c, .22)}"/>`
+    + line("M60,110 Q54,170 40,226 M100,110 Q106,170 120,226 M80,104 V234", dk(c, .16), 1.2)
+    + marks(o, c);
+}
+
 const TOPS = { tee, hoodie, shirt, sweater };
 const JACKETS = ["blazer", "denim", "leather", "bomber", "neon"];
 function topLayer(t){ if (!t) return ""; const f = TOPS[t.k] || tee; return f(t); }
@@ -298,6 +309,7 @@ function outfit(spec, o){
       : `<g transform="translate(8,8)" filter="url(#${ID}ds)">${topG}</g>`;
   }
   if (spec.bottom) s += `<g transform="translate(188,12)" filter="url(#${ID}ds)">${bottom(spec.bottom)}</g>`;
+  if (spec.dress) s += `<g transform="translate(92,2) scale(.9)" filter="url(#${ID}ds)">${dress(spec.dress)}</g>`;
   if (spec.shoes) s += `<g transform="translate(6,232) scale(1.24)" filter="url(#${ID}ds)">${shoes(spec.shoes)}</g>`;
   const used = {};
   (spec.extras || []).forEach(x => {
@@ -326,6 +338,7 @@ function piece(item, o){
   else if (TOPS[item.k]) inner = topLayer(item);
   else if (JACKETS.includes(item.k)) inner = jacket(item);
   else if (LEGS[item.k]){ inner = bottom(item); cw = 120; ch = 230; }
+  else if (item.k === "dress"){ inner = dress(item); cw = 160; ch = 244; }
   else if (EXTRA[item.k]){ inner = EXTRA[item.k].d(item); cw = EXTRA[item.k].w; ch = EXTRA[item.k].h; }
   const pad = 8;
   return `<svg class="ss-piece" viewBox="0 0 120 120" role="img" aria-label="${esc(o.label || item.k)}" xmlns="http://www.w3.org/2000/svg">${defs()}<g filter="url(#${ID}ds)">${fit(pad, pad, 120 - pad * 2, 120 - pad * 2, cw, ch, inner)}</g></svg>`;

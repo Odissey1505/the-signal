@@ -42,7 +42,7 @@ window.SIGNAL_COURSE = {
         lessons: [
           { id: "c2a", type: "A", title: "What's Your Style?", tags: ["Vocabulary", "Reading"], content: true, file: "lessons/c2a-whats-your-style.js" },
           { id: "c2b", type: "B", title: "The Fashion Time Machine", tags: ["Grammar", "Reading"], content: true, file: "lessons/c2b-fashion-time-machine.js" },
-          { id: "c2c", type: "C", title: "Swap shop challenge", tags: ["Final Mission", "Reading"] }
+          { id: "c2c", type: "C", title: "The Secret in the Jacket", tags: ["Revision", "Reading", "Final Mission"], content: true, file: "lessons/c2c-secret-in-the-jacket.js" }
         ]
       },
       {

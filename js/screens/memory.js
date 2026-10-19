@@ -1058,4 +1058,9 @@ define("tmJacket", (el, scr, ctx) => {
   };
 }, { story:true, label: () => "The jacket" });
 
+/* спільні помічники для наступних уроків Unit 2 (напр. js/screens/secret.js, Урок 6) */
+window.SignalTM = { later, store, plain, say, fmt, LETTER, scrollTo, shuffle, Toggles, UA, UAQ, EXAMPLE, HINT,
+  mcq, mcqClick, mcqDone, norm, grade, textRow, textClick, textDone, msgHTML, threadHTML, playThread, ava,
+  photo, jacketArt, icon, outfitPic, cassette, ticket, notebook, speakCard };
+
 })();
