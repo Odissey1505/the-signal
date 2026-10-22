@@ -91,6 +91,8 @@ if (typeof document !== "undefined") document.addEventListener("click", e => {
 });
 
 /* ---------- картинки: образи 1998, куртка, фото всіх чотирьох, Emma ---------- */
+const hasLook = (les, id) => !!(((les.media || {}).looks || {})[id]);
+const lookCls = (les, id) => hasLook(les, id) ? "is-photo" : "";
 function lookArt(les, id, label){
   const m = (les.media && les.media.looks) || {};
   if (m[id]) return `<img class="ss-art ss-img" src="${esc(m[id])}" alt="${esc(label || "")}" decoding="async">`;
@@ -303,7 +305,7 @@ define("sjMatch", (el, scr, ctx) => {
       <div class="sj-planpeek" id="sj-plan" ${planOpen ? "" : "hidden"}>${les.plan.names.map(x => `<p><b>${esc(x.n)}:</b> ${esc(x.wear)}</p>`).join("")}</div>
       <div class="sj-photos">${d.photos.map(p => { const who = M.at[p.id];
         return `<button class="sj-snap ${who ? "ok" : ""} ${lastBad === p.id ? "shake" : ""} ${sel && !who ? "ready" : ""}" type="button" data-photo="${p.id}" ${who ? "disabled" : ""} aria-label="Photo ${p.n}${who ? ": " + cap(who) : sel ? " — put " + sel + " here" : ""}">
-          <span class="sj-snap-img">${lookArt(les, p.id, p.alt)}</span>
+          <span class="sj-snap-img ${lookCls(les, p.id)}">${lookArt(les, p.id, p.alt)}</span>
           <span class="sj-snap-cap"><span>Photo ${p.n}</span>${who ? `<b class="sj-snap-name">✓ ${esc(cap(who))}</b>` : `<i class="sj-drop">${sel ? "Put " + esc(sel) + " here" : "Who is it?"}</i>`}</span>
         </button>`; }).join("")}</div>
       <div aria-live="polite">${done ? `<div class="note good">✓ ${good(2)} All four photos have names.</div>` : msg ? `<div class="note ${msg.c}">${msg.t}</div>` : `<p class="muted sj-tip">Drag a name onto a photo — or tap a name, then tap the photo.</p>`}</div>
@@ -409,7 +411,7 @@ define("sjSpeak", (el, scr, ctx) => {
   const draw = () => {
     const got = d.evidence && CASE(ctx).ev[d.evidence];
     el.innerHTML = `${head(ctx, "", "Your turn 🗣")}
-      ${d.looks ? `<div class="sj-looks" role="group" aria-label="Choose an outfit">${les.plan.names.map(x => `<button class="sj-lk ${A.pick === x.id ? "on" : ""}" type="button" data-pick="${x.id}" aria-pressed="${A.pick === x.id}"><span class="sj-lk-img">${lookArt(les, x.id, x.n + "'s outfit: " + x.wear)}</span><b>${esc(x.n)}'s outfit</b></button>`).join("")}</div>` : ""}
+      ${d.looks ? `<div class="sj-looks" role="group" aria-label="Choose an outfit">${les.plan.names.map(x => `<button class="sj-lk ${A.pick === x.id ? "on" : ""}" type="button" data-pick="${x.id}" aria-pressed="${A.pick === x.id}"><span class="sj-lk-img ${lookCls(les, x.id)}">${lookArt(les, x.id, x.n + "'s outfit: " + x.wear)}</span><b>${esc(x.n)}'s outfit</b></button>`).join("")}</div>` : ""}
       <div class="card sj-qcard">
         <div class="tm-qrow"><p class="q-big sj-bigq">${esc(d.speak.q)}</p>${say(d.speak.q)}</div>
         ${A.pick ? `<p class="sj-pickline">I'd wear <b>${esc(cap(A.pick))}'s</b> outfit because… <span class="muted">(2–3 words from Lesson 4!)</span></p>` : ""}
@@ -701,7 +703,7 @@ define("sjFashionCode", (el, scr, ctx) => {
   const ch = scr.data.ch, les = ctx.les, A = store(ctx, scr, "c1"); A.r = A.r || {};
   const T = Toggles(); let fresh = false;
   const qs = ch.items.map((q, i) => withGood(q, i));
-  const pic = it => it.look === "jacket" ? `<span class="sj-cpic jk">${jacketPic(les)}</span>` : `<span class="sj-cpic">${lookArt(les, it.look, les.plan.names.find(x => x.id === it.look).n + "'s outfit")}</span>`;
+  const pic = it => it.look === "jacket" ? `<span class="sj-cpic jk">${jacketPic(les)}</span>` : `<span class="sj-cpic ${lookCls(les, it.look)}">${lookArt(les, it.look, les.plan.names.find(x => x.id === it.look).n + "'s outfit")}</span>`;
   const draw = () => {
     const c = CASE(ctx);
     el.innerHTML = `${head(ctx, "Three outfits. Choose the correct word for each one.", ch.title + " " + ch.icon, { onReset: dropDigit(ctx, 1) })}
@@ -833,7 +835,7 @@ define("sjReveal", (el, scr, ctx) => {
           ${s === 0 ? `<span class="sj-env-tap">Tap to open</span>` : ""}
         </button>
         ${s >= 1 ? `<div class="sj-reveal-items ${s === 1 && anim ? "ix-reveal" : ""}">
-          <button class="sj-photo4 ${A.flip ? "flip" : ""}" type="button" data-flip aria-pressed="${!!A.flip}" aria-label="${A.flip ? "The back of the photo. Tap to turn it over." : "A photo of all four friends. Tap to see the back."}">
+          <button class="sj-photo4 ${(les.media || {}).four ? "real" : ""} ${A.flip ? "flip" : ""}" type="button" data-flip aria-pressed="${!!A.flip}" aria-label="${A.flip ? "The back of the photo. Tap to turn it over." : "A photo of all four friends. Tap to see the back."}">
             <span class="sj-p4in"><span class="sj-p4f">${fourPhoto(les)}</span><span class="sj-p4b"><i>${esc(L.photoBack)}</i></span></span>
           </button>
           <p class="sj-p4cap">${A.flip ? esc(L.photoBack) : "All four friends — together. 📸 Tap the photo to turn it over."}</p>
@@ -867,7 +869,7 @@ define("sjEnding", (el, scr, ctx) => {
   const d = scr.data, les = ctx.les, A = store(ctx, scr, "end");
   el.innerHTML = `<div class="story-screen sj-end">
       <p class="sj-endline" id="e1">${esc(d.scene)}</p>
-      <div class="sj-endphoto" id="e2" hidden>${fourPhoto(les)}</div>
+      <div class="sj-endphoto ${(les.media || {}).four ? "real" : ""}" id="e2" hidden>${fourPhoto(les)}</div>
       <p class="sj-endline" id="e3" hidden>${esc(d.buzz)} <span class="sj-buzz" aria-hidden="true">📱</span></p>
       <div class="tm-unk" id="u1" hidden><div class="tm-unk-head"><span class="tm-ava mono who-unknown" aria-hidden="true">?</span><div><b id="stitle" tabindex="-1">UNKNOWN SENDER</b><small>no number</small></div></div><div class="tm-thread" id="t1" aria-live="polite"></div></div>
       <p class="sj-endline" id="e4" hidden>${esc(d.smile)} 🙂</p>

@@ -36,9 +36,11 @@ const MEDIA = {
   jacket: "assets/c2b/jacket.webp",
   jacketAlt: "Dad's old denim jacket with gold buttons, two chest pockets and a red patch with a white triangle.",
   /* нові для Уроку 6 */
-  looks: { dan:null, alex:null, emma:null, anna:null },   /* 4 фото з щоденника (квадрат) — без імен */
-  four: null,          /* єдине фото всіх чотирьох друзів (квадрат) */
-  fourAlt: "An old photo from 21 November 1998: four teenagers laugh together in front of a stage — Dan in his denim jacket with the red patch and a bucket hat, Alex in a black leather jacket, Emma in a colourful dress and Anna in a bright red hoodie with a camera in her hand.",
+  looks: {            /* 4 фото з щоденника (≈4:3, flat lay) — без імен; етап 3 і Challenge 1 */
+    anna:"assets/c2c/look-anna.webp", emma:"assets/c2c/look-emma.webp", dan:"assets/c2c/look-dan.webp", alex:"assets/c2c/look-alex.webp"
+  },
+  four: "assets/c2c/four-friends.webp",   /* єдине фото всіх чотирьох друзів (≈1,15:1) — конверт у етапі 7 і фінал */
+  fourAlt: "An old photo from 21 November 1998: four teenagers smile together in front of a stage with coloured lights — Emma with long dark hair in a purple dress with daisies and a yellow belt, Dan in a bucket hat, a denim jacket and a white T-shirt, Anna in a red hoodie, and Alex in a backwards cap, a black leather jacket and a red T-shirt with an old camera around his neck. Date stamp: '98 11 21.",
   emma: null,          /* Emma сьогодні — портрет для чату (квадрат) */
   box: null            /* стара металева скринька з кодовим замком (квадрат, прозорий фон) */
 };
@@ -193,10 +195,10 @@ window.SIGNAL_LESSONS.c2c = {
       title:"Who Wore What? 👕🔎",
       intro:"Marko opens Dad's old diary again. Four small photos fall out. There are no names on the back! Use Anna's style plan to find out who is who.",
       photos:[
-        { id:"anna", n:1, cap:"red hoodie, loose jeans, trainers", alt:"Photo 1: a bright red hoodie, loose blue jeans, white trainers with red details and an old phone — a girl's outfit on a bed." },
-        { id:"emma", n:2, cap:"colourful dress, comfortable shoes", alt:"Photo 2: a purple dress with little flowers and a yellow belt, and comfortable light trainers." },
-        { id:"dan", n:3, cap:"denim jacket, white T-shirt, loose jeans, bucket hat", alt:"Photo 3: a denim jacket with a red patch, a white T-shirt, loose blue jeans, white trainers and a beige bucket hat." },
-        { id:"alex", n:4, cap:"black leather jacket, red T-shirt, dark trousers, boots", alt:"Photo 4: a black leather jacket over a red T-shirt, dark trousers and brown boots." }
+        { id:"anna", n:1, cap:"red hoodie, loose jeans, trainers", alt:"Photo 1: a bright red hoodie, loose blue jeans, white trainers with red stripes and a phone, laid out on a sunny stone floor." },
+        { id:"emma", n:2, cap:"colourful dress, comfortable shoes", alt:"Photo 2: a purple dress with white flowers and a yellow belt, comfortable pink trainers, pink sunglasses and a small bunch of white flowers." },
+        { id:"dan", n:3, cap:"denim jacket, white T-shirt, loose jeans, bucket hat", alt:"Photo 3: a denim jacket with a red patch and a white triangle, a white T-shirt, loose blue jeans, white trainers with red stripes and a beige bucket hat." },
+        { id:"alex", n:4, cap:"black leather jacket, red T-shirt, dark trousers, boots", alt:"Photo 4: a black leather jacket over a red T-shirt, black trousers with a belt and black lace-up boots." }
       ],
       names:["Dan", "Alex", "Emma", "Anna"],
       what:[
