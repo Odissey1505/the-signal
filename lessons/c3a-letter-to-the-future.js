@@ -36,8 +36,38 @@ const MEDIA = {
   fourAlt: "An old photo of four friends — Emma, Dan, Anna and Alex — at a festival in 1998.",
   /* нові для Уроку 7 */
   letter: null,        /* старий блокнот із листом (≈4:3) — чат Марка в розділі 1 */
-  room1998: null,      /* кімната підлітка 1998 (≈4:3) — розділ 5, ліва половина */
-  room2026: null,      /* кімната підлітка 2026 (≈4:3) — розділ 5, права половина */
+  /* розділ 5: одна картинка «1998 vs 2026» (≈2,44:1; підписи 1998 / 2026 і «VS» уже на ній).
+     hot — точки з підписами: x, y — у відсотках від ширини й висоти картинки; yr — "98" (бурштинова точка) або "26" (блакитна);
+     s — куди відкривається підпис: "r" праворуч (типово), "l" ліворуч, "t" угору, "b" униз.
+     Якщо картинка не завантажиться, урок покаже намальовані кімнати (room1998 / room2026 або SVG). */
+  rooms: {
+    src: "assets/c3a/rooms-1998-2026.webp",
+    alt: "Two teenage bedrooms side by side. Left, Dan's bedroom in 1998: warm orange light, an old computer with a big monitor, a home phone with a cord, a film camera, racks of CDs and cassettes, a LIVE City Sound poster, printed photos on the wall, a speaker, an electric guitar, magazines on the floor and a denim jacket on the chair. Right, Marko's bedroom in 2026: blue and purple LED light, a laptop, a big screen with music streaming, a smartphone with 9 notifications, a phone on a wireless charger, wireless headphones, 128 likes and 12 new messages, a hoodie on the chair and a game controller on the bed.",
+    hot: [
+      { x:11.3, y:10.3, t:"a concert poster", yr:"98", s:"b" },
+      { x:21.8, y:13.5, t:"printed photos", yr:"98" },
+      { x:38.0, y:9.1, t:"a stereo speaker", yr:"98" },
+      { x:15.0, y:30.8, t:"a huge computer", yr:"98" },
+      { x:2.5, y:35.2, t:"cassette tapes", yr:"98" },
+      { x:24.5, y:39.1, t:"a film camera", yr:"98", s:"b" },
+      { x:29.2, y:40.6, t:"a home phone", yr:"98" },
+      { x:34.1, y:36.5, t:"CDs", yr:"98", s:"t" },
+      { x:24.9, y:58.2, t:"Dad's denim jacket", yr:"98" },
+      { x:38.6, y:58.2, t:"an electric guitar", yr:"98", s:"t" },
+      { x:24.9, y:86.1, t:"magazines", yr:"98" },
+      { x:58.8, y:20.6, t:"LED lights", yr:"26", s:"b" },
+      { x:72.8, y:18.6, t:"music streaming", yr:"26", s:"t" },
+      { x:87.3, y:13.3, t:"social media", yr:"26", s:"b" },
+      { x:67.9, y:35.5, t:"a laptop", yr:"26", s:"b" },
+      { x:78.3, y:35.0, t:"a wireless charger", yr:"26", s:"t" },
+      { x:81.7, y:36.5, t:"a smartphone", yr:"26", s:"l" },
+      { x:89.3, y:40.4, t:"wireless headphones", yr:"26", s:"b" },
+      { x:57.4, y:58.2, t:"a hoodie", yr:"26" },
+      { x:91.7, y:68.7, t:"a game controller", yr:"26" }
+    ]
+  },
+  room1998: null,      /* запасний варіант: окрема кімната 1998 (≈4:3) */
+  room2026: null,      /* запасний варіант: окрема кімната 2026 (≈4:3) */
   events: {            /* 13 фото подій (квадрат) — картки Life Map; null = іконка */
     born:null, startSchool:null, leaveSchool:null, uni:null, degree:null, job:null, licence:null,
     vote:null, leaveHome:null, moveHome:null, married:null, children:null, retire:null

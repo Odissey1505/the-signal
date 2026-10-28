@@ -745,8 +745,9 @@ define("tcLetter", (el, scr, ctx) => {
 }, { label: () => "Dad's letter" });
 
 /* ============================================================
-   CHAPTER 5 · tcSplit — 1998 | 2026: дві кімнати з підписами + питання до читання
+   CHAPTER 5 · tcSplit — 1998 | 2026: кімнати з точками-підписами + питання до читання
    data: { headline, sub, qs:[{q,ua,starter,ex,fu}] }
+   Картинка й точки — les.media.rooms { src, alt, hot:[{x,y,t,yr}] }; без неї — намальовані кімнати (HOT нижче)
    ============================================================ */
 const HOT = {
   y98:[{ x:24, y:40, t:"a huge computer" }, { x:48, y:50, t:"a home phone" }, { x:74, y:54, t:"CDs" }, { x:88, y:60, t:"cassette tapes" }, { x:75, y:20, t:"printed photos" }],
@@ -801,12 +802,24 @@ function room26(){
 define("tcSplit", (el, scr, ctx) => {
   frame(el, ctx);
   const d = scr.data, les = ctx.les, A = store(ctx, scr, "pre"); A.hot = A.hot || {};
+  const R = media(les, "rooms");
+  let photoOK = !!(R && R.src && R.hot && R.hot.length);
+  const dot = (key, h, cls) => { const on = !!A.hot[key]; return `<button class="tc-hot ${cls || ""} s-${h.s || (h.x > 70 ? "l" : "r")} ${on ? "on" : ""}" type="button" data-hot="${key}" style="left:${h.x}%;top:${h.y}%" aria-pressed="${on}" aria-label="${esc(h.t)}"><i aria-hidden="true"></i><span>${esc(h.t)}</span></button>`; };
+  /* одна реалістична картинка: підписи 1998 / 2026 і «VS» уже на ній */
+  const photo = () => `<figure class="tc-gen tc-photo"><div class="tc-photo-scroll"><div class="tc-photo-in">
+      <img src="${esc(R.src)}" alt="${esc(R.alt || "")}" decoding="async" id="rooms">
+      ${R.hot.map((h, i) => dot("p" + i, h, h.yr === "26" ? "y26" : "y98")).join("")}
+    </div></div></figure>`;
+  /* запасний варіант: дві намальовані кімнати */
   const side = (k, year, label) => { const src = media(les, k === "y98" ? "room1998" : "room2026");
     return `<figure class="tc-side ${k}">
       <div class="tc-scene">${pic(src, label, k === "y98" ? room98() : room26(), "room")}<span class="tc-year">${year}</span>
-        ${HOT[k].map((h, i) => { const on = !!A.hot[k + i]; return `<button class="tc-hot ${on ? "on" : ""}" type="button" data-hot="${k + i}" style="left:${h.x}%;top:${h.y}%" aria-pressed="${on}" aria-label="${esc(h.t)}"><i aria-hidden="true"></i><span>${esc(h.t)}</span></button>`; }).join("")}
+        ${HOT[k].map((h, i) => dot(k + i, h, k)).join("")}
       </div>
       <figcaption>${label}</figcaption></figure>`; };
+  const drawn = () => `<div class="tc-gen">${side("y98", "1998", "Dan's bedroom · 1998")}<span class="tc-vs" aria-hidden="true">vs</span>${side("y26", "2026", "Marko's bedroom · 2026")}</div>`;
+  const keys = () => photoOK ? R.hot.map((h, i) => "p" + i) : ["y98", "y26"].flatMap(k => HOT[k].map((h, i) => k + i));
+  const count = () => { const ks = keys(); return `${ks.filter(k => A.hot[k]).length} / ${ks.length}`; };
   const draw = () => {
     el.innerHTML = `${bar(ctx)}
       <header class="tc-gen-head">
@@ -814,13 +827,19 @@ define("tcSplit", (el, scr, ctx) => {
         <h2 class="stitle tc-gen-title" id="stitle" tabindex="-1">${esc(d.headline)}</h2>
         <p class="tc-gen-sub">${esc(d.sub)}</p>
       </header>
-      <div class="tc-gen">${side("y98", "1998", "Dan's bedroom · 1998")}<span class="tc-vs" aria-hidden="true">vs</span>${side("y26", "2026", "Marko's bedroom · 2026")}</div>
-      <p class="tc-tip">${icon("eye")} Tap the dots to find things from each year.</p>
+      ${photoOK ? photo() : drawn()}
+      <div class="tc-row tc-hotbar"><p class="tc-tip">${icon("eye")} Tap the dots to find things from each year. Which things are in both rooms?${photoOK ? `<span class="tc-swipe">Swipe the picture to see both rooms.</span>` : ""}</p><span class="spacer"></span><span class="pill" id="hc">Found ${count()}</span>${ctx.teacher ? `<button class="btn small ghost" type="button" data-hotall>Show all labels</button>` : ""}</div>
       <h3 class="tc-h">Before you read</h3>
       <div class="tc-pre">${d.qs.map((q, k) => `<div class="card">${qBlock(ctx, "pre" + k, q)}</div>`).join("")}</div>`;
+    const img = $("#rooms", el);
+    if (img) img.onerror = () => { photoOK = false; draw(); };
     ctx.setCTA({ label:"Read the two stories →" });
   };
-  el.onclick = e => { const h = e.target.closest("[data-hot]"); if (h){ const k = h.dataset.hot; A.hot[k] = !A.hot[k]; save(); h.classList.toggle("on", A.hot[k]); h.setAttribute("aria-pressed", String(A.hot[k])); if (A.hot[k]){ Snd.pop(); } } };
+  el.onclick = e => {
+    const h = e.target.closest("[data-hot]");
+    if (h){ const k = h.dataset.hot; A.hot[k] = !A.hot[k]; save(); h.classList.toggle("on", A.hot[k]); h.setAttribute("aria-pressed", String(A.hot[k])); if (A.hot[k]) Snd.pop(); const c = $("#hc", el); if (c) c.textContent = "Found " + count(); return; }
+    if (e.target.closest("[data-hotall]")){ const ks = keys(); const all = ks.every(k => A.hot[k]); ks.forEach(k => A.hot[k] = !all); save(); draw(); }
+  };
   draw();
 }, { label: () => "1998 vs 2026" });
 
