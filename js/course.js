@@ -47,12 +47,12 @@ window.SIGNAL_COURSE = {
       },
       {
         n: 3, title: "Generation Swap", emoji: "⏳", color: "#E8590C",
-        tagline: "Three days without a phone.",
+        tagline: "1998 vs 2026. Who had it better?",
         unit: "Unit 3 · My way of life", grammar: "Comparatives, not as … as",
-        blurb: "Marko has to live like a teenager in 1985. The whole school is watching.",
+        blurb: "Marko finds his dad's letter to the future from 1998. Was it easier to be a teenager then — or now?",
         lessons: [
-          { id: "c3a", type: "A", title: "The challenge", tags: ["Vocabulary", "Reading"] },
-          { id: "c3b", type: "B", title: "Day 1 without a phone", tags: ["Grammar", "Listening"] },
+          { id: "c3a", type: "A", title: "A Letter to the Future", tags: ["Vocabulary", "Reading"], content: true, file: "lessons/c3a-letter-to-the-future.js" },
+          { id: "c3b", type: "B", title: "Who Had It Better?", tags: ["Grammar", "Listening"] },
           { id: "c3c", type: "C", title: "Generation debate", tags: ["Final Mission", "Reading"] }
         ]
       },
