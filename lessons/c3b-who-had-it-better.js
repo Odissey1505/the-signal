@@ -63,10 +63,13 @@ const MEDIA = {
     ]
   },
   /* нові для Уроку 8 */
-  box: null,           /* стара коробка тата: фото, сторінки щоденника, касета (≈4:3) */
-  brick: null,         /* величезний старий мобільний телефон («цеглина») у руці Марка (≈1:1) */
+  box: "assets/c3b/box-1998.webp",          /* стара коробка тата: фото, сторінки щоденника, касета (≈1,45:1) */
+  brick: "assets/c3b/brick-phone.webp",     /* старий мобільний телефон 1998 року на столі (1:1) */
   diary: null,         /* розворот старого щоденника з квитком у кіно (≈4:3) — фон заголовка щоденника */
-  sort: { cassette:null, stream:null, map:null, share:null, music:null, park:null }  /* 6 фото для Time Sort (квадрат) */
+  sort: {              /* 6 фото для Time Sort (4:3) */
+    cassette:"assets/c3b/sort-cassette.webp", stream:"assets/c3b/sort-stream.webp", map:"assets/c3b/sort-map.webp",
+    share:"assets/c3b/sort-share.webp", music:"assets/c3b/sort-music.webp", park:"assets/c3b/sort-park.webp"
+  }
 };
 
 /* ---------- 10 слів уроку (контекстна лексика) ---------- */

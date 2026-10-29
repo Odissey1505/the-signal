@@ -536,7 +536,7 @@ define("gxPredict", (el, scr, ctx) => {
       ${A.box ? `<section class="gx-boxwrap ${freshBox ? "gx-in" : ""}">
           <div class="gx-phone slim"><div class="gx-thread" id="bt">${A.boxChat ? chatHTML(les, B.intro) : ""}</div></div>
           <div class="gx-box">
-            <div class="gx-box-art">${pic(media(les, "box"), "Dad's old box", ART.box(), "box")}</div>
+            <div class="gx-box-art">${pic(media(les, "box"), "Dad's old cardboard box labelled DAN — 1998, with printed photos, a diary page and a cassette inside", ART.box(), "box")}</div>
             <div class="gx-box-items">${B.items.map(it => `<button class="gx-bitem ${A.seen[it.id] ? "on" : ""}" type="button" data-bitem="${it.id}" aria-pressed="${!!A.seen[it.id]}">${icon(it.id === "photos" ? "photo" : it.id === "diary" ? "book" : "tape")}<span><b>${esc(it.t)}</b>${A.seen[it.id] ? `<small>${esc(it.s)}</small>` : `<small>Tap to look</small>`}</span></button>`).join("")}</div>
           </div>
           ${nSeen ? `<div class="gx-open-case ${freshMission ? "gx-in" : ""}"><span class="gx-osd">${icon("search")} ${esc(B.mission.k)}</span><h3>${esc(B.mission.t)}</h3><p>${esc(B.mission.s)}</p>${files()}</div>` : ""}
@@ -753,7 +753,7 @@ define("gxLab", (el, scr, ctx) => {
         <span class="gx-sc2-row"><span class="e98"><small>1998</small><b aria-hidden="true">${s.a98}</b></span><span class="gx-sc2-sign" aria-label="${s.sign === "=" ? "equal" : "less than"}">${s.sign}</span><span class="e26"><small>2026</small><b aria-hidden="true">${s.a26}</b></span></span>
         <span class="gx-sc2-t">${A.seen[i] ? hlText(s.t) : "Tap to read the sentence"}</span></button>`).join("")}</div>`;
     return `<div class="gx-comic">
-        <div class="gx-comic-pic">${pic(media(les, "brick"), "Marko holding Dad's huge old mobile phone", ART.brick(), "brick")}</div>
+        <div class="gx-comic-pic">${pic(media(les, "brick"), "Dad's old mobile phone from 1998 with a small green screen and big buttons", ART.brick(), "brick")}</div>
         <div class="gx-comic-bubbles">${N.comic.map((c, i) => `<button class="gx-cb who-${c.who} ${A.seen[i] ? "on" : ""}" type="button" data-seen="${i}" aria-pressed="${!!A.seen[i]}">${face(les, c.who)}<span><b>${esc(les.characters[c.who].name)}</b>${hlText(c.t)}</span></button>`).join("")}</div>
       </div>`;
   };

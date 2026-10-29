@@ -495,7 +495,7 @@ mark.gx-hl{background:rgba(92,225,230,.18);color:#BFFBFC;border-radius:6px;paddi
 .gx-sc2-t{font-weight:700;font-size:1.08rem;line-height:1.4;color:var(--ink-2)}
 .gx-scene2.on{border-color:var(--y26)}
 .gx-scene2.on .gx-sc2-t{color:var(--ink)}
-.gx-comic{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:center;padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.gx-comic{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:center;padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
 .gx-comic-pic{aspect-ratio:1;border-radius:16px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#3A2A17,#17141F)}
 .gx-comic-bubbles{display:grid;gap:12px}
 .gx-cb{display:flex;gap:10px;align-items:flex-end;text-align:left;border:0;background:none;color:var(--ink);cursor:pointer;padding:0}
@@ -804,7 +804,7 @@ mark.gx-hl{background:rgba(92,225,230,.18);color:#BFFBFC;border-radius:6px;paddi
   .gx-scenes,.gx-evcols,.gx-rev,.gx-file-eras{grid-template-columns:1fr}
   .gx-evvs{top:50%}
   .gx-comic{grid-template-columns:1fr}
-  .gx-comic-pic{max-width:200px;margin:0 auto}
+  .gx-comic-pic{max-width:260px;margin:0 auto}
   .gx-rgroup{grid-template-columns:1fr}
   .gx-rpair{grid-template-columns:1fr}
   .gx-score{grid-template-columns:1fr 1fr}
