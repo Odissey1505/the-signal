@@ -53,7 +53,7 @@ window.SIGNAL_COURSE = {
         lessons: [
           { id: "c3a", type: "A", title: "A Letter to the Future", tags: ["Vocabulary", "Reading"], content: true, file: "lessons/c3a-letter-to-the-future.js" },
           { id: "c3b", type: "B", title: "Who Had It Better?", tags: ["Grammar", "Reading", "Listening"], content: true, file: "lessons/c3b-who-had-it-better.js" },
-          { id: "c3c", type: "C", title: "Generation debate", tags: ["Final Mission", "Reading"] }
+          { id: "c3c", type: "C", title: "The Secret of 1998", tags: ["Revision", "Reading", "Final Mission"], content: true, file: "lessons/c3c-secret-of-1998.js" }
         ]
       },
       {
