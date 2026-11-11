@@ -35,11 +35,16 @@ window.SIGNAL_LESSONS = window.SIGNAL_LESSONS || {};
 (function(){
 /* ---------- картинки (null = намальована сцена) ---------- */
 const MEDIA = {
-  room: null,       /* темна кімната Марка, щоденник на дерев'яному столі, телефон світиться (16:9) */
-  team: null,       /* старе фото шкільної футбольної команди 1997 року (4:3) — доказ C */
-  living: null,     /* вітальня ввечері, тепле світло лампи, двоє дорослих на дивані (16:9) — кінцівка A */
-  letter: null,     /* рука пише лист на кухонному столі ввечері (16:9) — кінцівка B */
-  morning: null     /* ранок, сонце сходить за вікном кімнати Марка (16:9) — анонс Unit 4 */
+  room: "assets/c3c/room-night.webp",           /* темна кімната Марка, стіл під лампою (16:9) — етап 1; живий щоденник лежить поверх */
+  diary: "assets/c3c/diary-cover.webp",         /* обкладинка щоденника «DAN 1998» (4:3) — етап 1, відкривається анімацією */
+  envelope: "assets/c3c/envelope.webp",         /* конверт Westbridge Sports Academy (3:2) — доказ A */
+  ticket: "assets/c3c/ticket.webp",             /* квиток до Westbridge, 31.08.1998 (2:1) — доказ B */
+  team: "assets/c3c/team-1997.webp",            /* фото шкільної команди 1997 без рамки (4:3) — картка на столі */
+  teamPolaroid: "assets/c3c/team-1997-polaroid.webp", /* те саме фото в рамці з підписом (≈1,21:1) — лицьовий бік, який перевертається */
+  note: "assets/c3c/note-alex.webp",            /* записка Alex «You were good enough…» (4:3) — зворот фото */
+  living: "assets/c3c/living-room.webp",        /* вітальня ввечері (≈2,4:1) — кінцівка A */
+  letter: "assets/c3c/letter-night.webp",       /* кухонний стіл під лампою з аркушем (≈2,4:1) — кінцівка B */
+  morning: "assets/c3c/morning.webp"            /* світанок за вікном (≈2,4:1) — анонс Unit 4 */
 };
 
 /* ---------- 13 виразів Уроку 7 (повторення, підказки в етапах 2 і 6) ---------- */
@@ -116,7 +121,7 @@ window.SIGNAL_LESSONS.c3c = {
     const base = (window.SIGNAL_LESSONS.c1a || {}).characters || {};
     return Object.assign({}, base, {
       dad: { name:"Dad", img:"assets/c2b/dad-today.webp", face:{ x:50, y:29 }, look:{ hair:"short", colour:"#1E1612", skin:"#7A4B32", top:"#4D6E9C", mood:"smile" } },
-      mum: { name:"Mum", look:{ hair:"straight-long", colour:"#4A2E1C", skin:"#E8C4A8", top:"#8E5BA8", mood:"smile" } }
+      mum: { name:"Mum", img:"assets/c3c/mum.webp", face:{ x:50, y:37 }, look:{ hair:"straight-long", colour:"#4A2E1C", skin:"#E8C4A8", top:"#8E5BA8", mood:"smile" } }
     });
   },
   order: ["zoe", "leo", "dana", "marko", "nate"],
